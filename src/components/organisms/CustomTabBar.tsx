@@ -55,11 +55,14 @@ const MyTabBar = ({
               testID={options.tabBarTestID}
               onPress={onPress}
               onLongPress={onLongPress}
-              style={tabStyles.tabButton}>
+              style={[
+                tabStyles.tabButton,
+                isFocused ? tabStyles.tabButtonFocused : null,
+              ]}>
               <Text
                 style={[
                   tabStyles.tabText,
-                  {color: isFocused ? '#de2c7b' : '#7A2048'},
+                  isFocused ? tabStyles.tabTextFocused : null,
                 ]}>
                 {label}
               </Text>

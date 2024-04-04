@@ -1,19 +1,29 @@
-import {ViewStyle, TextStyle} from 'react-native';
+import {StyleSheet} from 'react-native';
 
-const tabStyles = {
+const tabStyles = StyleSheet.create({
   tabContainer: {
     flexDirection: 'row',
-    backgroundColor: '#1E2761',
-    borderTopWidth: 2,
-    borderTopColor: '#de2c7b',
-  } as ViewStyle,
+    backgroundColor: '#fff',
+    borderTopWidth: 1,
+    borderTopColor: '#ddd',
+  },
   tabButton: {
     flex: 1,
-  } as ViewStyle,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 10,
+  },
+  tabButtonFocused: {
+    backgroundColor: '#fff', // Adjust as needed
+  },
   tabText: {
-    textAlign: 'center',
-    padding: 16,
-  } as TextStyle,
-};
+    fontSize: 14,
+    color: '#000',
+  },
+  tabTextFocused: {
+    color: '#000', // Adjust as needed
+    fontWeight: 'bold',
+  },
+});
 
 export default tabStyles;

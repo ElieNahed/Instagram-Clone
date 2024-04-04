@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, FlatList, Image} from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
+import StoryFlatList from '../../components/organisms/storylist/StoryFlatList';
 
-// Define interface for actor objects
 interface Actor {
   id: string;
   name: string;
@@ -27,39 +27,10 @@ const HomeScreen = () => {
     }
   };
 
-  const renderActorItem = ({item}: {item: Actor}) => (
-    <View style={styles.actorItem}>
-      <Image source={{uri: item.image}} style={styles.actorImage} />
-      <Text style={styles.actorName}>{item.name}</Text>
-    </View>
-  );
-
-  // Placeholder user icon
-  const renderUserIcon = () => (
-    <View style={styles.userIconContainer}>
-      <View style={styles.userIcon}></View>
-      <Text style={styles.storyText}>Your Story</Text>
-    </View>
-  );
-
-  // Include the user icon as the first item in the data array
-  const dataWithUserIcon: Actor[] = [
-    {id: 'userIcon', name: 'Your Name', image: 'https://your.image.url'},
-    ...actors,
-  ];
-
   return (
     <View style={styles.container}>
-      <FlatList
-        data={dataWithUserIcon}
-        keyExtractor={item => item.id}
-        renderItem={({item}) =>
-          item.id === 'userIcon' ? renderUserIcon() : renderActorItem({item})
-        }
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.actorList}
-      />
+      <Text style={styles.title}>Instagram-Clone</Text>
+      <StoryFlatList data={actors} />
     </View>
   );
 };
@@ -67,38 +38,17 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'flex-start', // Align items to the start (left)
+    justifyContent: 'flex-start', // Align content to the start (top)
+    paddingTop: 20, // Add some padding to give space between the title and the top edge
+    paddingHorizontal: 20, // Add some horizontal padding for better alignment
   },
-  actorList: {
-    paddingHorizontal: 10,
-  },
-  actorItem: {
-    marginRight: 10,
-    alignItems: 'center',
-  },
-  actorImage: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
-  },
-  actorName: {
-    marginTop: 5,
-  },
-  userIconContainer: {
-    marginRight: 10,
-    alignItems: 'center',
-  },
-  userIcon: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
-    backgroundColor: 'gray', // Placeholder color
-  },
-  storyText: {
-    marginTop: 5, // Adjust the spacing between the icon and text
-    color: 'black', // Adjust text color as needed
-    fontWeight: 'bold',
+  title: {
+    fontFamily: 'Arial', // Change the font family
+    fontSize: 15, // Adjust the font size if needed
+    fontWeight: 'bold', // Adjust font weight if needed
+    marginBottom: 20, // Add margin bottom to separate the title from the content below
+    color: 'black', // Set the font color to black
   },
 });
 

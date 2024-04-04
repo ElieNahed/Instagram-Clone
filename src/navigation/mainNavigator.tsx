@@ -4,7 +4,7 @@ import {RootStackParamList} from './RootStackParamList';
 import HomeScreen from '../screens/homescreen/HomeScreen';
 import SearchScreen from '../screens/searchscreen/SearchScreen';
 import AddPostScreen from '../screens/addpostscreen/AddPostScreen';
-import MyTabBar from '../components/organisms/CustomTabBar';
+import MyTabBar from '../components/organisms/tabbar/CustomTabBar';
 import ProfileScreen from '../screens/profilescreen/ProfileScreen';
 import ReelsScreen from '../screens/reelsscreen/ReelsScreen';
 const MainStackNavigator = createBottomTabNavigator<RootStackParamList>();

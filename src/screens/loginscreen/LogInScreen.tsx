@@ -1,15 +1,38 @@
-// screens/LoginScreen.tsx
-import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import React, {useState} from 'react';
+import {View, StyleSheet, Button as RNButton} from 'react-native';
 import TextField from '../../components/atoms/TextField';
 import Button from '../../components/atoms/Button';
 
-const LoginScreen: React.FC = () => {
+interface LoginProps {
+  onLoginSuccess: () => void;
+}
+
+const LoginScreen: React.FC<LoginProps> = ({onLoginSuccess}) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = () => {
+    if (username === 'Elienahed' && password === '12345') {
+      onLoginSuccess();
+    } else {
+      console.log('Incorrect credentials. Please try again.');
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <TextField placeholder="Username" />
-      <TextField placeholder="Password" secureTextEntry />
-      <Button title="Login" onPress={() => console.log('Login pressed')} />
+      <TextField
+        placeholder="Username"
+        value={username}
+        onChangeText={setUsername}
+      />
+      <TextField
+        placeholder="Password"
+        secureTextEntry={true}
+        value={password}
+        onChangeText={setPassword}
+      />
+      <Button title="Login" onPress={handleLogin} />
     </View>
   );
 };

@@ -6,7 +6,6 @@ const HomeScreen = () => {
   return (
     <View style={styles.container}>
       <Text>Instagram Home Screen</Text>
-      {/* Add components for feed, stories, etc. */}
     </View>
   );
 };

@@ -1,15 +1,17 @@
 package com.Instagram_Clone
 
-import android.os.Bundle;
+import android.os.Bundle
+import com.zoontek.rnbootsplash.RNBootSplash
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
 import com.facebook.react.defaults.DefaultReactActivityDelegate
 
 class MainActivity : ReactActivity() {
-
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(null)
+ 
+ override fun onCreate(savedInstanceState: Bundle?) {
+    RNBootSplash.init(this, R.style.BootTheme) 
+    super.onCreate(savedInstanceState)
   }
 
   /**

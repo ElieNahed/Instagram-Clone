@@ -6,8 +6,10 @@ import {
   Image,
   TouchableHighlight,
   Text,
+  TextInput,
+  Button,
+  StyleSheet,
 } from 'react-native';
-import apiStyles from './styles';
 
 const initialPage = 'https://6602a7879d7276a75553dd30.mockapi.io/actors';
 
@@ -17,10 +19,11 @@ interface Character {
   image: string;
 }
 
-const ApiScreen = () => {
+const SearchScreen = () => {
   const [loading, setLoading] = useState(false);
   const [items, setItems] = useState<Character[]>([]);
   const [nextPage, setNextPage] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const fetchPage = async (url: string) => {
     try {
@@ -61,19 +64,35 @@ const ApiScreen = () => {
 
   const renderItem = ({item}: {item: Character}) => {
     return (
-      <TouchableHighlight
-        underlayColor="transparent"
-        style={apiStyles.touchable}>
-        <View key={item.id} style={apiStyles.itemContainer}>
-          <Image source={{uri: item.image}} style={apiStyles.image} />
-          <Text style={apiStyles.name}>{item.name}</Text>
+      <TouchableHighlight underlayColor="transparent" style={styles.touchable}>
+        <View key={item.id} style={styles.itemContainer}>
+          <Image source={{uri: item.image}} style={styles.image} />
+          <Text style={styles.name}>{item.name}</Text>
         </View>
       </TouchableHighlight>
     );
   };
 
+  const handleSearch = () => {
+    // Perform search based on the searchQuery
+    // For simplicity, let's assume we're filtering items by name
+    const filteredItems = items.filter(item =>
+      item.name.toLowerCase().includes(searchQuery.toLowerCase()),
+    );
+    setItems(filteredItems);
+  };
+
   return (
-    <View style={apiStyles.viewContainer}>
+    <View style={styles.container}>
+      <View style={styles.searchContainer}>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search..."
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+        />
+        <Button title="Search" onPress={handleSearch} />
+      </View>
       <FlatList
         data={items}
         renderItem={renderItem}
@@ -92,4 +111,40 @@ const ApiScreen = () => {
   );
 };
 
-export default ApiScreen;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+  },
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  searchInput: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    marginRight: 10,
+  },
+  touchable: {
+    marginBottom: 10,
+  },
+  itemContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  image: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginRight: 10,
+  },
+  name: {
+    fontSize: 16,
+  },
+});
+
+export default SearchScreen;

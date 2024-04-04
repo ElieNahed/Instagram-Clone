@@ -1,7 +1,7 @@
 import React from 'react';
 import {render, fireEvent} from '@testing-library/react-native';
 import {RouteProp, useNavigation} from '@react-navigation/native'; // Import useNavigation
-import HomeScreen from '../src/screens/HomeScreen/HomeScreen';
+import HomeScreen from '../src/screens/homescreen/HomeScreen';
 import {RootStackParamList} from '../src/navigation/RootStackParamList'; // Adjust path as needed
 
 // Define a mock for the RouteProp

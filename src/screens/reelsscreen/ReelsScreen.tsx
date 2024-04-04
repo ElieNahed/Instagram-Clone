@@ -1,12 +1,10 @@
-// HomeScreen.js
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
-const HomeScreen = () => {
+const ReelsScreen = () => {
   return (
     <View style={styles.container}>
-      <Text>Instagram Home Screen</Text>
-      {/* Add components for feed, stories, etc. */}
+      <Text style={styles.text}>This is the Reels Screen</Text>
     </View>
   );
 };
@@ -14,9 +12,13 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    fontSize: 20,
+    fontWeight: 'bold',
   },
 });
 
-export default HomeScreen;
+export default ReelsScreen;

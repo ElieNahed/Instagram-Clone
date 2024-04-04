@@ -1,17 +1,14 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, Button as RNButton} from 'react-native';
-import TextField from '../../components/atoms/TextField';
-import Button from '../../components/atoms/Button';
+// LoginScreen.tsx
+import React from 'react';
+import {View, StyleSheet, Text} from 'react-native';
+import LoginForm from '../../components/molecules/loginform/LogInForm';
 
 interface LoginProps {
   onLoginSuccess: () => void;
 }
 
 const LoginScreen: React.FC<LoginProps> = ({onLoginSuccess}) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleLogin = () => {
+  const handleLogin = (username: string, password: string) => {
     if (username === 'test' && password === '1') {
       onLoginSuccess();
     } else {
@@ -21,18 +18,8 @@ const LoginScreen: React.FC<LoginProps> = ({onLoginSuccess}) => {
 
   return (
     <View style={styles.container}>
-      <TextField
-        placeholder="Username"
-        value={username}
-        onChangeText={setUsername}
-      />
-      <TextField
-        placeholder="Password"
-        secureTextEntry={true}
-        value={password}
-        onChangeText={setPassword}
-      />
-      <Button title="Login" onPress={handleLogin} />
+      <Text style={styles.title}>Instagram-clone Login</Text>
+      <LoginForm onLogin={handleLogin} />
     </View>
   );
 };
@@ -42,6 +29,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     paddingHorizontal: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'center',
   },
 });
 

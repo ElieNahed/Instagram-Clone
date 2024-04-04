@@ -12,7 +12,7 @@ const LoginScreen: React.FC<LoginProps> = ({onLoginSuccess}) => {
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
-    if (username === 'Elienahed' && password === '12345') {
+    if (username === 'test' && password === '1') {
       onLoginSuccess();
     } else {
       console.log('Incorrect credentials. Please try again.');

@@ -5,7 +5,6 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {enableLatestRenderer} from 'react-native-maps';
 import BootSplash from 'react-native-bootsplash';
 import LoginScreen from './src/screens/loginscreen/LogInScreen';
-import HomeScreen from './src/screens/homescreen/HomeScreen';
 
 enableLatestRenderer();
 

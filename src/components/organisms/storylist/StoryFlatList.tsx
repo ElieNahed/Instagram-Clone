@@ -34,20 +34,26 @@ const StoryFlatList = ({data}: StoryFlatListProps) => {
   ];
 
   return (
-    <FlatList
-      data={dataWithUserIcon}
-      keyExtractor={item => item.id}
-      renderItem={({item}) =>
-        item.id === 'userIcon' ? renderUserIcon() : renderActorItem({item})
-      }
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      contentContainerStyle={styles.actorList}
-    />
+    <View style={styles.container}>
+      <FlatList
+        data={dataWithUserIcon}
+        keyExtractor={item => item.id}
+        renderItem={({item}) =>
+          item.id === 'userIcon' ? renderUserIcon() : renderActorItem({item})
+        }
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.actorList}
+      />
+      <View style={styles.underline} />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+  },
   actorList: {
     paddingHorizontal: 10,
   },
@@ -74,9 +80,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'gray', // Placeholder color
   },
   storyText: {
-    marginTop: 5, // Adjust the spacing between the icon and text
-    color: 'black', // Adjust text color as needed
+    marginTop: 5,
+    color: 'black',
     fontWeight: 'bold',
+  },
+  underline: {
+    borderBottomWidth: 1,
+    borderBottomColor: 'black',
+    width: '100%',
   },
 });
 

@@ -118,11 +118,15 @@ const styles = StyleSheet.create({
   },
   profilePictureContainer: {
     marginRight: 20, // Add margin between profile picture and counters
+    // Increase the size of the container to make the picture bigger
+    width: 100,
+    height: 100,
+    borderRadius: 50, // Adjust border radius to maintain circular shape
   },
   profilePicture: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
+    width: 100, // Increase the width of the picture
+    height: 100, // Increase the height of the picture
+    borderRadius: 50, // Adjust border radius to maintain circular shape
   },
   counterSection: {
     flexDirection: 'row',

@@ -1,5 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {useNavigation} from '@react-navigation/native'; // Import useNavigation hook from React Navigation
+import {NavigationContainerRef, RouteProp} from '@react-navigation/native';
+
 import StoryFlatList from '../../components/organisms/storylist/StoryFlatList';
 import MsgPageIcone from '../../assets/homepage/msgpage-icon.svg';
 
@@ -9,7 +12,15 @@ interface Actor {
   image: string;
 }
 
-const HomeScreen: React.FC<{navigation: any}> = ({navigation}) => {
+type RootStackParamList = {
+  HomeScreen: undefined;
+  MessageScreen: undefined;
+};
+
+type HomeScreenNavigationProp = NavigationContainerRef<RootStackParamList>;
+
+const HomeScreen = () => {
+  const navigation = useNavigation<HomeScreenNavigationProp>(); // Initialize navigation hook
   const [actors, setActors] = useState<Actor[]>([]);
 
   useEffect(() => {
@@ -28,15 +39,11 @@ const HomeScreen: React.FC<{navigation: any}> = ({navigation}) => {
     }
   };
 
-  const goToMessageScreen = () => {
-    navigation.navigate('MessageScreen');
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>Instagram-Clone</Text>
-        <TouchableOpacity onPress={goToMessageScreen}>
+        <TouchableOpacity onPress={() => navigation.navigate('MessageScreen')}>
           <MsgPageIcone />
         </TouchableOpacity>
       </View>

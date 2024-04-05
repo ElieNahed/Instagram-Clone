@@ -31,12 +31,7 @@ const ProfileScreen = () => {
       ref={drawerRef}
       drawerWidth={300}
       drawerPosition="right"
-      renderNavigationView={() => (
-        <View style={styles.drawer}>
-          {/* Drawer content */}
-          <Text>Drawer Content</Text>
-        </View>
-      )}>
+      renderNavigationView={() => <View style={styles.emptyDrawer}></View>}>
       <View style={styles.container}>
         <View style={styles.header}>
           {/* User name */}
@@ -159,12 +154,9 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     marginBottom: 10,
   },
-  drawer: {
+  emptyDrawer: {
     flex: 1,
-    backgroundColor: '#fff',
-    padding: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: 'transparent', // Make drawer transparent
   },
 });
 

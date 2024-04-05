@@ -1,6 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {useNavigation} from '@react-navigation/native'; // Import useNavigation hook from React Navigation
+import {NavigationContainerRef, RouteProp} from '@react-navigation/native';
+
 import StoryFlatList from '../../components/organisms/storylist/StoryFlatList';
+import MsgPageIcone from '../../assets/homepage/msgpage-icon.svg';
 
 interface Actor {
   id: string;
@@ -8,7 +12,15 @@ interface Actor {
   image: string;
 }
 
+type RootStackParamList = {
+  HomeScreen: undefined;
+  MessageScreen: undefined;
+};
+
+type HomeScreenNavigationProp = NavigationContainerRef<RootStackParamList>;
+
 const HomeScreen = () => {
+  const navigation = useNavigation<HomeScreenNavigationProp>(); // Initialize navigation hook
   const [actors, setActors] = useState<Actor[]>([]);
 
   useEffect(() => {
@@ -29,7 +41,12 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Instagram-Clone</Text>
+      <View style={styles.header}>
+        <Text style={styles.title}>Instagram-Clone</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('MessageScreen')}>
+          <MsgPageIcone />
+        </TouchableOpacity>
+      </View>
       <StoryFlatList data={actors} />
     </View>
   );
@@ -38,17 +55,24 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'flex-start', // Align items to the start (left)
-    justifyContent: 'flex-start', // Align content to the start (top)
-    paddingTop: 20, // Add some padding to give space between the title and the top edge
-    paddingHorizontal: 20, // Add some horizontal padding for better alignment
+    position: 'relative',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    paddingTop: 20,
+    paddingHorizontal: 20,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    marginBottom: 20,
   },
   title: {
-    fontFamily: 'Arial', // Change the font family
-    fontSize: 15, // Adjust the font size if needed
-    fontWeight: 'bold', // Adjust font weight if needed
-    marginBottom: 20, // Add margin bottom to separate the title from the content below
-    color: 'black', // Set the font color to black
+    fontFamily: 'Arial',
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: 'black',
   },
 });
 

@@ -38,16 +38,12 @@ const HomeScreen = () => {
     }
   };
 
-  const goToMessageScreen = () => {
-    navigation.navigate('MessageScreen'); // Navigate to MessageScreen route
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>Instagram-Clone</Text>
 
-        <TouchableOpacity onPress={goToMessageScreen}>
+        <TouchableOpacity>
           <MsgPageIcone />
         </TouchableOpacity>
       </View>

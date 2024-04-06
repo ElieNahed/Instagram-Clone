@@ -1,11 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import {
-  createDrawerNavigator,
-  DrawerContentScrollView,
-  DrawerItem,
-  DrawerContentComponentProps,
-} from '@react-navigation/drawer';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import MenuButton from '../../assets/profilepage/menubutton.svg';
 
 const Drawer = createDrawerNavigator();
 
@@ -19,7 +15,8 @@ const ProfileScreen = ({navigation}: {navigation: any}) => {
         <TouchableOpacity
           style={styles.menuButton}
           onPress={() => navigation.openDrawer()}>
-          <Text style={styles.menuButtonText}>Menu</Text>
+          {/* Adjust the size of MenuButton component */}
+          <MenuButton width={20} height={20} />
         </TouchableOpacity>
       </View>
       {/* Profile Picture and Counter Section */}
@@ -98,9 +95,6 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#eee',
     borderRadius: 5,
-  },
-  menuButtonText: {
-    fontSize: 16,
   },
   profileSection: {
     flexDirection: 'row',

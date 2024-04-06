@@ -5,7 +5,7 @@ import HomeScreen from '../screens/homescreen/HomeScreen';
 import SearchScreen from '../screens/searchscreen/SearchScreen';
 import AddPostScreen from '../screens/addpostscreen/AddPostScreen';
 import MyTabBar from '../components/organisms/tabbar/CustomTabBar';
-import ProfileScreen from '../screens/profile/ProfileScreen';
+import ProfileScreen from '../screens/profile/userprofilescreen/ProfileScreen';
 import ReelsScreen from '../screens/reelsscreen/ReelsScreen';
 import HomeIcon from '../assets/homepage/home.svg';
 import SearchIcon from '../assets/homepage/search.svg';

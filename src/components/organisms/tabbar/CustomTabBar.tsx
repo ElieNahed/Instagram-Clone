@@ -1,30 +1,25 @@
 import React, {PropsWithChildren} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import tabStyles from './tabStyles';
 
 interface TabBarProps {
   state: any;
   descriptors: any;
   navigation: any;
+  icons: any; // Pass icons as props
 }
 
 const MyTabBar = ({
   state,
   descriptors,
   navigation,
+  icons, // Receive icons as props
 }: PropsWithChildren<TabBarProps>) => {
   return (
     <>
       <View style={tabStyles.tabContainer}>
         {state.routes.map((route: any, index: number) => {
           const {options} = descriptors[route.key];
-          const label =
-            options.tabBarLabel !== undefined
-              ? options.tabBarLabel
-              : options.title !== undefined
-              ? options.title
-              : route.name;
-
           const isFocused = state.index === index;
 
           const onPress = () => {
@@ -46,26 +41,26 @@ const MyTabBar = ({
             });
           };
 
+          // Get the corresponding icon for the route
+          const Icon = icons[index];
+
           return (
             <TouchableOpacity
               key={route.key}
               accessibilityRole="button"
               accessibilityState={isFocused ? {selected: true} : {}}
-              accessibilityLabel={options.tabBarAccessibilityLabel}
-              testID={options.tabBarTestID}
               onPress={onPress}
               onLongPress={onLongPress}
               style={[
                 tabStyles.tabButton,
                 isFocused ? tabStyles.tabButtonFocused : null,
               ]}>
-              <Text
-                style={[
-                  tabStyles.tabText,
-                  isFocused ? tabStyles.tabTextFocused : null,
-                ]}>
-                {label}
-              </Text>
+              {/* Render the SVG icon */}
+              <Icon
+                width={24}
+                height={24}
+                fill={isFocused ? 'blue' : 'white'}
+              />
             </TouchableOpacity>
           );
         })}

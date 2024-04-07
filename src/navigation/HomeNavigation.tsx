@@ -1,4 +1,5 @@
-import {createStackNavigator} from '@react-navigation/stack';
+import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
+import {Platform} from 'react-native';
 import React from 'react';
 import MessageScreen from '../screens/message/MessageScreen';
 import Home from '../screens/home/HomeScreen';
@@ -9,7 +10,32 @@ const Tab = createStackNavigator<RootStackParamList>();
 
 const HomeNav = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      // Apply custom animation for Android
+      screenOptions={{
+        cardStyleInterpolator: ({current, next, layouts}) => {
+          return {
+            cardStyle: {
+              transform: [
+                {
+                  translateX: current.progress.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [layouts.screen.width, 0],
+                  }),
+                },
+                {
+                  translateX: next
+                    ? next.progress.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: [0, -layouts.screen.width],
+                      })
+                    : 1,
+                },
+              ],
+            },
+          };
+        },
+      }}>
       <Tab.Screen
         name="HomeScreen"
         component={Home}

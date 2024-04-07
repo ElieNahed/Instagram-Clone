@@ -69,8 +69,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   title: {
-    fontFamily: 'Arial',
-    fontSize: 15,
+    fontFamily: 'Pacifico-Regular',
+    fontSize: 25,
     fontWeight: 'bold',
     color: 'black',
   },

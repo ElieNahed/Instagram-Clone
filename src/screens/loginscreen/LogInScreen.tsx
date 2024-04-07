@@ -2,6 +2,7 @@
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import LoginForm from '../../components/molecules/loginform/LogInForm';
+import LogInHeader from '../../components/organisms/header/LogInHeader';
 
 interface LoginProps {
   onLoginSuccess: () => void;
@@ -18,7 +19,7 @@ const LoginScreen: React.FC<LoginProps> = ({onLoginSuccess}) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Instagram-clone Login</Text>
+      <LogInHeader onPress></LogInHeader>
       <LoginForm onLogin={handleLogin} />
     </View>
   );

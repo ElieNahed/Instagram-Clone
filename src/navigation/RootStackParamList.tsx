@@ -4,4 +4,7 @@ export type RootStackParamList = {
   AddPost: undefined;
   Reels: undefined;
   Profile: undefined;
+  Notification: undefined;
+  MessageScreen: undefined;
+  HomeScreen: undefined;
 };

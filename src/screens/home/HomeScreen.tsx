@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {NavigationContainerRef} from '@react-navigation/native';
-import MsgPageIcone from '../../assets/homepage/msgpage-icon.svg';
 import StoryFlatList from '../../components/organisms/storylist/StoryFlatList';
+import HomeHeader from '../../components/organisms/header/HomeHeader';
 
 interface Actor {
   id: string;
@@ -11,15 +10,8 @@ interface Actor {
   image: string;
 }
 
-type RootStackParamList = {
-  HomeScreen: undefined;
-  MessageScreen: undefined;
-};
-
-type HomeScreenNavigationProp = NavigationContainerRef<RootStackParamList>;
-
 const HomeScreen = () => {
-  const navigation = useNavigation<HomeScreenNavigationProp>();
+  const navigation = useNavigation();
   const [actors, setActors] = useState<Actor[]>([]);
 
   useEffect(() => {
@@ -41,11 +33,7 @@ const HomeScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Instagram-Clone</Text>
-
-        <TouchableOpacity>
-          <MsgPageIcone />
-        </TouchableOpacity>
+        <HomeHeader title={'Instagram-clone'} navigation={navigation} />
       </View>
       <StoryFlatList data={actors} />
     </View>
@@ -67,12 +55,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     marginBottom: 20,
-  },
-  title: {
-    fontFamily: 'Pacifico-Regular',
-    fontSize: 25,
-    fontWeight: 'bold',
-    color: 'black',
   },
 });
 

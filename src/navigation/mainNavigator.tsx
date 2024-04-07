@@ -12,11 +12,10 @@ import SearchIcon from '../assets/homepage/search.svg';
 import AddPostIcon from '../assets/homepage/addpost.svg';
 import ReelsIcon from '../assets/homepage/reels.svg';
 import ProfileIcon from '../assets/homepage/msgpage-icon.svg';
-
+import HomeNavigation from './HomeNavigation';
 const MainStackNavigator = createBottomTabNavigator<RootStackParamList>();
 
 const MainNavigator = () => {
-  // Define the array of icons
   const icons = [HomeIcon, SearchIcon, AddPostIcon, ReelsIcon, ProfileIcon];
 
   return (
@@ -24,7 +23,7 @@ const MainNavigator = () => {
       tabBar={props => <MyTabBar icons={icons} {...props} />}>
       <MainStackNavigator.Screen
         name="Home"
-        component={HomeScreen}
+        component={HomeNavigation}
         options={{
           headerShown: false,
           tabBarIcon: ({size}) => (

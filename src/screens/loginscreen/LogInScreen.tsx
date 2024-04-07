@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
+    fontFamily: 'Pacifico-Regular',
   },
 });
 

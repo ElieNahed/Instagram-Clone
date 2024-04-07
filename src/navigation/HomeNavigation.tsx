@@ -11,7 +11,6 @@ const Tab = createStackNavigator<RootStackParamList>();
 const HomeNav = () => {
   return (
     <Tab.Navigator
-      // Apply custom animation for Android
       screenOptions={{
         cardStyleInterpolator: ({current, next, layouts}) => {
           return {

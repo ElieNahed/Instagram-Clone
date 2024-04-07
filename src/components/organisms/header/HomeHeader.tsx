@@ -8,7 +8,13 @@ const HomeHeader = ({navigation}: any) => {
     <View style={styles.viewContainer}>
       <Text style={styles.title}>Instagram-Clone</Text>
       <View style={styles.viewButtonsContainer}>
-        <NotificationIcon width={30} height={30} />
+        <Pressable
+          onPress={() => {
+            navigation.navigate('Notification');
+          }}>
+          <NotificationIcon width={35} height={35} />
+        </Pressable>
+
         <Pressable
           onPress={() => {
             navigation.navigate('MessageScreen');
@@ -32,7 +38,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#000',
   },
   title: {
-    fontSize: 24,
+    fontSize: 20,
     fontFamily: 'Pacifico-Regular',
     marginLeft: 10,
     flex: 0.6,

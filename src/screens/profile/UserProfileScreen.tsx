@@ -29,16 +29,20 @@ const ProfileScreen = ({navigation}: {navigation: any}) => {
         </View>
         <View style={styles.counterItems}>
           <View style={styles.statItem}>
-            <Text style={styles.statNumber}>100</Text>
-            <Text style={styles.statLabel}>Posts</Text>
+            <Text style={[styles.statNumber, styles.smallerText]}>100</Text>
+            <Text style={[styles.statLabel, styles.smallerText]}>Posts</Text>
           </View>
           <View style={styles.statItem}>
-            <Text style={styles.statNumber}>100k</Text>
-            <Text style={styles.statLabel}>Followers</Text>
+            <Text style={[styles.statNumber, styles.smallerText]}>100k</Text>
+            <Text style={[styles.statLabel, styles.smallerText]}>
+              Followers
+            </Text>
           </View>
           <View style={styles.statItem}>
-            <Text style={styles.statNumber}>100</Text>
-            <Text style={styles.statLabel}>Following</Text>
+            <Text style={[styles.statNumber, styles.smallerText]}>100</Text>
+            <Text style={[styles.statLabel, styles.smallerText]}>
+              Following
+            </Text>
           </View>
         </View>
       </View>
@@ -103,14 +107,14 @@ const styles = StyleSheet.create({
   },
   profilePictureContainer: {
     marginRight: 20,
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 80, // Adjust the width here
+    height: 80, // Adjust the height here
+    borderRadius: 40, // Adjust the border radius to half of width/height
   },
   profilePicture: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 80, // Adjust the width here
+    height: 80, // Adjust the height here
+    borderRadius: 40, // Adjust the border radius to half of width/height
   },
   counterItems: {
     flexDirection: 'row',
@@ -121,11 +125,11 @@ const styles = StyleSheet.create({
     marginRight: 15,
   },
   statNumber: {
-    fontSize: 20,
+    fontSize: 18, // Adjust the font size here
     fontWeight: 'bold',
   },
   statLabel: {
-    fontSize: 18,
+    fontSize: 16, // Adjust the font size here
     color: '#666',
   },
   photosContainer: {
@@ -137,6 +141,9 @@ const styles = StyleSheet.create({
     width: '32%',
     aspectRatio: 1,
     marginBottom: 10,
+  },
+  smallerText: {
+    fontSize: 16, // Adjust as per your requirement
   },
 });
 

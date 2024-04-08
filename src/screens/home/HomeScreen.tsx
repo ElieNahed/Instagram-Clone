@@ -85,7 +85,9 @@ const HomeScreen = () => {
         <LikeIcon
           width={30}
           height={30}
-          fill={likeCounts[item.id] > 0 ? '#FF0000' : 'none'}
+          fill={likeCounts[item.id] > 0 ? '#FF0000' : 'none'} // Fill red if liked, none otherwise
+          stroke={likeCounts[item.id] > 0 ? '#000000' : '#FFFFFF'} // Black border if liked, white border otherwise
+          strokeWidth={likeCounts[item.id] > 0 ? 3 : 0} // Set stroke width to 3 if liked, 0 otherwise
         />
       </Pressable>
       <Text style={styles.likeCount}>{likeCounts[item.id]}</Text>

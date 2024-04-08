@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import MenuButton from '../../assets/profilepage/menubutton.svg';
-
+import LogOutScreen from '../logout/LogOutScreen';
 const Drawer = createDrawerNavigator();
 
 const ProfileScreen = ({navigation}: {navigation: any}) => {
@@ -72,10 +72,11 @@ const DrawerNavigation = () => {
         drawerPosition: 'right',
         headerShown: false,
         drawerStyle: {
-          width: 450,
+          width: 250,
         },
       }}>
       <Drawer.Screen name="Settings and Activity" component={ProfileScreen} />
+      <Drawer.Screen name="LogOut" component={LogOutScreen} />
     </Drawer.Navigator>
   );
 };

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import StoryFlatList from '../../components/organisms/storylist/StoryFlatList';
+import StoryFlatList from '../../components/organisms/homelist/StoryFlatList';
 import HomeHeader from '../../components/organisms/header/HomeHeader';
 
 interface Actor {

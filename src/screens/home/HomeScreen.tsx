@@ -12,6 +12,9 @@ import {useNavigation} from '@react-navigation/native';
 import StoryFlatList from '../../components/organisms/homelist/StoryFlatList';
 import HomeHeader from '../../components/organisms/header/HomeHeader';
 import LikeIcon from '../../assets/homepage/Like.svg';
+import CommentIcon from '../../assets/homepage/Comment.svg';
+import ShareIcon from '../../assets/homepage/Share.svg';
+import SaveIcon from '../../assets/homepage/Save.svg';
 
 interface Actor {
   id: string;
@@ -61,6 +64,18 @@ const HomeScreen = () => {
     }));
   };
 
+  const handleShare = (actorId: string) => {
+    // Implement the share functionality here
+    // For example, you can use the Share API from React Native to share content
+    console.log('Shared actor:', actorId);
+  };
+
+  const handleSave = (actorId: string) => {
+    // Implement the save functionality here
+    // For example, you can save the actor to a list of saved items
+    console.log('Saved actor:', actorId);
+  };
+
   const renderActorItem = ({item}: {item: Actor}) => (
     <View style={styles.actorContainer}>
       <View style={styles.actorHeader}>
@@ -75,21 +90,44 @@ const HomeScreen = () => {
           {width: screenWidth * 0.8, height: screenWidth * 0.8},
         ]}
       />
-      <Pressable
-        style={styles.likeIconContainer}
-        onPress={() => {
-          likeCounts[item.id] === 0
-            ? incrementLikeCount(item.id)
-            : decrementLikeCount(item.id);
-        }}>
-        <LikeIcon
-          width={30}
-          height={30}
-          fill={likeCounts[item.id] > 0 ? '#FF0000' : 'none'} // Fill red if liked, none otherwise
-          stroke={likeCounts[item.id] > 0 ? '#000000' : '#FFFFFF'} // Black border if liked, white border otherwise
-          strokeWidth={likeCounts[item.id] > 0 ? 3 : 0} // Set stroke width to 3 if liked, 0 otherwise
-        />
-      </Pressable>
+      <View style={styles.iconContainer}>
+        <Pressable
+          style={styles.likeIconContainer}
+          onPress={() => {
+            likeCounts[item.id] === 0
+              ? incrementLikeCount(item.id)
+              : decrementLikeCount(item.id);
+          }}>
+          <LikeIcon
+            width={30}
+            height={30}
+            fill={likeCounts[item.id] > 0 ? '#FF0000' : 'none'} // Fill red if liked, none otherwise
+            stroke={likeCounts[item.id] > 0 ? '#000000' : '#FFFFFF'} // Black border if liked, white border otherwise
+            strokeWidth={likeCounts[item.id] > 0 ? 3 : 0} // Set stroke width to 3 if liked, 0 otherwise
+          />
+        </Pressable>
+        <Pressable
+          style={styles.commentIconContainer}
+          onPress={() => {
+            navigation.navigate('CommentScreen');
+          }}>
+          <CommentIcon width={25} height={25} />
+        </Pressable>
+        <Pressable
+          style={styles.commentIconContainer}
+          onPress={() => {
+            handleShare(item.id);
+          }}>
+          <ShareIcon width={30} height={30} />
+        </Pressable>
+        <Pressable
+          style={styles.saveIconContainer}
+          onPress={() => {
+            handleSave(item.id);
+          }}>
+          <SaveIcon width={30} height={30} />
+        </Pressable>
+      </View>
       <Text style={styles.likeCount}>{likeCounts[item.id]}</Text>
     </View>
   );
@@ -151,9 +189,21 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
-  likeIconContainer: {
-    marginTop: 0,
+  iconContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between', // Align items with space between them
+    marginTop: 5,
     alignSelf: 'flex-start',
+  },
+  likeIconContainer: {
+    marginRight: 10,
+  },
+  commentIconContainer: {
+    marginRight: 10,
+  },
+  saveIconContainer: {
+    marginRight: 10,
   },
   likeCount: {
     fontSize: 16,

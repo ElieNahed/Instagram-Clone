@@ -21,7 +21,7 @@ const HomeScreen = () => {
   const fetchActors = async () => {
     try {
       const response = await fetch(
-        'https://6602a7879d7276a75553dd30.mockapi.io/actors',
+        'https://66134ae153b0d5d80f67157c.mockapi.io/InstagramData/Actor',
       );
       const data: Actor[] = await response.json();
       setActors(data);

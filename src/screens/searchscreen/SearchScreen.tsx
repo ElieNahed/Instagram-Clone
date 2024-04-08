@@ -12,7 +12,8 @@ import {
 } from 'react-native';
 import SkeletonSearchScreen from './SkeletonSearchScreen'; // Import the skeleton screen component
 
-const initialPage = 'https://6602a7879d7276a75553dd30.mockapi.io/actors';
+const initialPage =
+  'https://66134ae153b0d5d80f67157c.mockapi.io/InstagramData/Actor';
 
 interface Character {
   id: string;

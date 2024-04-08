@@ -107,14 +107,14 @@ const styles = StyleSheet.create({
   },
   profilePictureContainer: {
     marginRight: 20,
-    width: 80, // Adjust the width here
-    height: 80, // Adjust the height here
-    borderRadius: 40, // Adjust the border radius to half of width/height
+    width: 100,
+    height: 100,
+    borderRadius: 50,
   },
   profilePicture: {
-    width: 80, // Adjust the width here
-    height: 80, // Adjust the height here
-    borderRadius: 40, // Adjust the border radius to half of width/height
+    width: 100,
+    height: 100,
+    borderRadius: 50,
   },
   counterItems: {
     flexDirection: 'row',

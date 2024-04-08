@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {
   View,
   FlatList,
@@ -27,6 +27,7 @@ const SearchScreen = () => {
   const [nextPage, setNextPage] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredItems, setFilteredItems] = useState<Character[]>([]);
+  const flatListRef = useRef<FlatList>(null);
 
   const fetchPage = async (url: string) => {
     try {
@@ -94,6 +95,28 @@ const SearchScreen = () => {
     );
   };
 
+  const handleEndReached = () => {
+    if (nextPage) {
+      fetchPage(nextPage);
+    }
+  };
+
+  const handleScrollEnd = () => {
+    // Refresh data when the user reaches the end of the list
+    onRefresh();
+  };
+
+  const handleScroll = ({nativeEvent}: any) => {
+    const {layoutMeasurement, contentOffset, contentSize} = nativeEvent;
+    const paddingToBottom = 20;
+    if (
+      layoutMeasurement.height + contentOffset.y >=
+      contentSize.height - paddingToBottom
+    ) {
+      handleEndReached();
+    }
+  };
+
   return (
     <View style={styles.container}>
       {loading ? (
@@ -110,20 +133,19 @@ const SearchScreen = () => {
             <Button title="Search" onPress={handleSearch} />
           </View>
           <FlatList
+            ref={flatListRef}
             data={filteredItems.length > 0 ? filteredItems : items}
             renderItem={renderItem}
             keyExtractor={(item, index) => item.id + index}
-            onEndReached={() => {
-              if (nextPage) {
-                fetchPage(nextPage);
-              }
-            }}
+            onEndReached={handleEndReached}
             onEndReachedThreshold={0.1}
             ListFooterComponent={() => loading && <ActivityIndicator />}
             refreshing={loading}
             onRefresh={onRefresh}
             numColumns={3}
             columnWrapperStyle={styles.columnWrapper}
+            onScroll={handleScroll}
+            onMomentumScrollEnd={handleScrollEnd} // Add this line
           />
         </View>
       )}

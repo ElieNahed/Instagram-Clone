@@ -7,4 +7,5 @@ export type RootStackParamList = {
   Notification: undefined;
   MessageScreen: undefined;
   HomeScreen: undefined;
+  SignUp: undefined;
 };

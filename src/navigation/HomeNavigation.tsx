@@ -8,7 +8,7 @@ import NotificationScreen from '../screens/notification/NotificationScreen';
 
 const Tab = createStackNavigator<RootStackParamList>();
 
-const HomeNav = () => {
+const HomeNavigation = () => {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -46,4 +46,4 @@ const HomeNav = () => {
   );
 };
 
-export default HomeNav;
+export default HomeNavigation;

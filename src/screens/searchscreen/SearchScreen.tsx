@@ -5,10 +5,10 @@ import {
   ActivityIndicator,
   Image,
   TouchableHighlight,
-  Text,
   TextInput,
   Button,
   StyleSheet,
+  Alert, // Import Alert
 } from 'react-native';
 
 const initialPage = 'https://6602a7879d7276a75553dd30.mockapi.io/actors';
@@ -24,6 +24,7 @@ const SearchScreen = () => {
   const [items, setItems] = useState<Character[]>([]);
   const [nextPage, setNextPage] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const [filteredItems, setFilteredItems] = useState<Character[]>([]);
 
   const fetchPage = async (url: string) => {
     try {
@@ -62,24 +63,31 @@ const SearchScreen = () => {
     fetchPage(initialPage);
   }, []);
 
-  const renderItem = ({item}: {item: Character}) => {
-    return (
-      <TouchableHighlight underlayColor="transparent" style={styles.touchable}>
-        <View key={item.id} style={styles.itemContainer}>
-          <Image source={{uri: item.image}} style={styles.image} />
-          <Text style={styles.name}>{item.name}</Text>
-        </View>
-      </TouchableHighlight>
-    );
-  };
-
   const handleSearch = () => {
     // Perform search based on the searchQuery
     // For simplicity, let's assume we're filtering items by name
     const filteredItems = items.filter(item =>
       item.name.toLowerCase().includes(searchQuery.toLowerCase()),
     );
-    setItems(filteredItems);
+    setFilteredItems(filteredItems);
+  };
+
+  const showUserName = (userName: string) => {
+    // Show the username using the Alert component
+    Alert.alert('Posted by:', userName);
+  };
+
+  const renderItem = ({item}: {item: Character}) => {
+    return (
+      <TouchableHighlight
+        underlayColor="transparent"
+        style={styles.touchable}
+        onPress={() => showUserName(item.name)}>
+        <View key={item.id} style={styles.itemContainer}>
+          <Image source={{uri: item.image}} style={styles.image} />
+        </View>
+      </TouchableHighlight>
+    );
   };
 
   return (
@@ -94,9 +102,9 @@ const SearchScreen = () => {
         <Button title="Search" onPress={handleSearch} />
       </View>
       <FlatList
-        data={items}
+        data={filteredItems.length > 0 ? filteredItems : items}
         renderItem={renderItem}
-        keyExtractor={item => item.id}
+        keyExtractor={(item, index) => item.id + index}
         onEndReached={() => {
           if (nextPage) {
             fetchPage(nextPage);
@@ -106,10 +114,14 @@ const SearchScreen = () => {
         ListFooterComponent={() => loading && <ActivityIndicator />}
         refreshing={loading}
         onRefresh={onRefresh}
+        numColumns={3} // To display images in multiple columns
+        columnWrapperStyle={styles.columnWrapper} // To provide spacing between columns
       />
     </View>
   );
 };
+
+export default SearchScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -130,21 +142,20 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   touchable: {
-    marginBottom: 10,
+    marginBottom: 0, // Remove margin bottom
   },
   itemContainer: {
-    flexDirection: 'row',
+    flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
+    margin: 0, // Remove margin
   },
   image: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    marginRight: 10,
+    width: 100,
+    height: 129,
+    borderRadius: 10,
   },
-  name: {
-    fontSize: 16,
+  columnWrapper: {
+    justifyContent: 'space-evenly',
   },
 });
-
-export default SearchScreen;

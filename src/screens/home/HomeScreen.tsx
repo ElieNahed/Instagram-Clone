@@ -1,5 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Image,
+  FlatList,
+  Dimensions,
+  Text,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import StoryFlatList from '../../components/organisms/homelist/StoryFlatList';
 import HomeHeader from '../../components/organisms/header/HomeHeader';
@@ -13,6 +20,7 @@ interface Actor {
 const HomeScreen = () => {
   const navigation = useNavigation();
   const [actors, setActors] = useState<Actor[]>([]);
+  const screenWidth = Dimensions.get('window').width;
 
   useEffect(() => {
     fetchActors();
@@ -30,12 +38,35 @@ const HomeScreen = () => {
     }
   };
 
+  const renderActorItem = ({item}: {item: Actor}) => (
+    <View style={styles.actorContainer}>
+      <View style={styles.actorHeader}>
+        <Image source={{uri: item.image}} style={styles.profileIcon} />
+        <Text style={styles.userName}>{item.name}</Text>
+      </View>
+      <Image
+        key={item.id}
+        source={{uri: item.image}}
+        style={[
+          styles.actorImage,
+          {width: screenWidth * 0.8, height: screenWidth * 0.8},
+        ]}
+      />
+    </View>
+  );
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <HomeHeader title={'Instagram-clone'} navigation={navigation} />
       </View>
       <StoryFlatList data={actors} />
+      <FlatList
+        data={actors}
+        renderItem={renderActorItem}
+        keyExtractor={item => item.id}
+        contentContainerStyle={styles.actorListContainer}
+      />
     </View>
   );
 };
@@ -44,7 +75,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     position: 'relative',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     justifyContent: 'flex-start',
     paddingTop: 20,
     paddingHorizontal: 20,
@@ -55,6 +86,36 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     marginBottom: 20,
+  },
+  actorContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 10,
+  },
+  actorImage: {
+    borderRadius: 10,
+    aspectRatio: 1,
+  },
+  actorHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 5,
+    alignSelf: 'flex-start', // Align the header content to the start of the container
+  },
+  profileIcon: {
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    marginRight: 10,
+  },
+  userName: {
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  actorListContainer: {
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingBottom: 20,
   },
 });
 

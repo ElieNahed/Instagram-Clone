@@ -6,10 +6,12 @@ import {
   FlatList,
   Dimensions,
   Text,
+  Pressable,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import StoryFlatList from '../../components/organisms/homelist/StoryFlatList';
 import HomeHeader from '../../components/organisms/header/HomeHeader';
+import LikeIcon from '../../assets/homepage/Like.svg';
 
 interface Actor {
   id: string;
@@ -20,6 +22,7 @@ interface Actor {
 const HomeScreen = () => {
   const navigation = useNavigation();
   const [actors, setActors] = useState<Actor[]>([]);
+  const [likeCounts, setLikeCounts] = useState<{[key: string]: number}>({});
   const screenWidth = Dimensions.get('window').width;
 
   useEffect(() => {
@@ -33,9 +36,29 @@ const HomeScreen = () => {
       );
       const data: Actor[] = await response.json();
       setActors(data);
+      // Initialize like counts for each actor to 0
+      const initialLikeCounts: {[key: string]: number} = {};
+      data.forEach(actor => {
+        initialLikeCounts[actor.id] = 0;
+      });
+      setLikeCounts(initialLikeCounts);
     } catch (error) {
       console.error('Error fetching actors:', error);
     }
+  };
+
+  const incrementLikeCount = (actorId: string) => {
+    setLikeCounts(prevCounts => ({
+      ...prevCounts,
+      [actorId]: prevCounts[actorId] + 1,
+    }));
+  };
+
+  const decrementLikeCount = (actorId: string) => {
+    setLikeCounts(prevCounts => ({
+      ...prevCounts,
+      [actorId]: Math.max(0, prevCounts[actorId] - 1),
+    }));
   };
 
   const renderActorItem = ({item}: {item: Actor}) => (
@@ -52,6 +75,20 @@ const HomeScreen = () => {
           {width: screenWidth * 0.8, height: screenWidth * 0.8},
         ]}
       />
+      <Pressable
+        style={styles.likeIconContainer}
+        onPress={() => {
+          likeCounts[item.id] === 0
+            ? incrementLikeCount(item.id)
+            : decrementLikeCount(item.id);
+        }}>
+        <LikeIcon
+          width={30}
+          height={30}
+          fill={likeCounts[item.id] > 0 ? '#FF0000' : 'none'}
+        />
+      </Pressable>
+      <Text style={styles.likeCount}>{likeCounts[item.id]}</Text>
     </View>
   );
 
@@ -111,6 +148,16 @@ const styles = StyleSheet.create({
   userName: {
     fontWeight: 'bold',
     fontSize: 16,
+  },
+  likeIconContainer: {
+    marginTop: 0,
+    alignSelf: 'flex-start',
+  },
+  likeCount: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginTop: 5,
+    alignSelf: 'flex-start',
   },
   actorListContainer: {
     alignItems: 'center',

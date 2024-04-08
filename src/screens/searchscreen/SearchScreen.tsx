@@ -53,10 +53,16 @@ const SearchScreen = () => {
     }
   };
 
+  const shuffleItems = () => {
+    const shuffled = items.slice().sort(() => Math.random() - 0.5);
+    setItems(shuffled);
+  };
+
   const onRefresh = () => {
     setItems([]);
     setNextPage(initialPage);
     fetchPage(initialPage);
+    shuffleItems(); // Shuffle images upon refresh
   };
 
   useEffect(() => {

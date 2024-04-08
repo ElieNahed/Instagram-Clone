@@ -1,9 +1,10 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import MenuButton from '../../assets/profilepage/menubutton.svg';
 import LogOutScreen from '../logout/LogOutScreen';
 import EditProfile from '../editprofile/EditProfileScreen';
+
 const Drawer = createDrawerNavigator();
 
 const ProfileScreen = ({navigation}: {navigation: any}) => {
@@ -20,13 +21,10 @@ const ProfileScreen = ({navigation}: {navigation: any}) => {
           <MenuButton width={20} height={20} />
         </TouchableOpacity>
       </View>
-      {/* Profile Picture and Counter Section */}
+      {/* Gray placeholder image */}
       <View style={styles.profileSection}>
         <View style={styles.profilePictureContainer}>
-          <Image
-            source={{uri: 'https://via.placeholder.com/150'}}
-            style={styles.profilePicture}
-          />
+          <View style={styles.grayPlaceholder} />
         </View>
         <View style={styles.counterItems}>
           <View style={styles.statItem}>
@@ -48,20 +46,7 @@ const ProfileScreen = ({navigation}: {navigation: any}) => {
         </View>
       </View>
 
-      <View style={styles.photosContainer}>
-        <Image
-          source={{uri: 'https://via.placeholder.com/150'}}
-          style={styles.photo}
-        />
-        <Image
-          source={{uri: 'https://via.placeholder.com/150'}}
-          style={styles.photo}
-        />
-        <Image
-          source={{uri: 'https://via.placeholder.com/150'}}
-          style={styles.photo}
-        />
-      </View>
+      <View style={styles.photosContainer}>{/* Photos */}</View>
     </View>
   );
 };
@@ -110,14 +95,12 @@ const styles = StyleSheet.create({
   },
   profilePictureContainer: {
     marginRight: 20,
-    width: 80, // Adjust the width here
-    height: 80, // Adjust the height here
-    borderRadius: 40, // Adjust the borderRadius if necessary
   },
-  profilePicture: {
-    width: 80, // Adjust the width here
-    height: 80, // Adjust the height here
-    borderRadius: 40, // Adjust the borderRadius if necessary
+  grayPlaceholder: {
+    width: 80,
+    height: 80,
+    backgroundColor: '#ccc',
+    borderRadius: 40,
   },
   counterItems: {
     flexDirection: 'row',
@@ -128,11 +111,11 @@ const styles = StyleSheet.create({
     marginRight: 15,
   },
   statNumber: {
-    fontSize: 18, // Adjust the font size here
+    fontSize: 18,
     fontWeight: 'bold',
   },
   statLabel: {
-    fontSize: 16, // Adjust the font size here
+    fontSize: 16,
     color: '#666',
   },
   photosContainer: {
@@ -140,13 +123,8 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'space-between',
   },
-  photo: {
-    width: '32%',
-    aspectRatio: 1,
-    marginBottom: 10,
-  },
   smallerText: {
-    fontSize: 16, // Adjust as per your requirement
+    fontSize: 16,
   },
 });
 

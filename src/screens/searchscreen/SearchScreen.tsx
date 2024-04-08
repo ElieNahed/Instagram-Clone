@@ -8,8 +8,9 @@ import {
   TextInput,
   Button,
   StyleSheet,
-  Alert, // Import Alert
+  Alert,
 } from 'react-native';
+import SkeletonSearchScreen from './SkeletonSearchScreen'; // Import the skeleton screen component
 
 const initialPage = 'https://6602a7879d7276a75553dd30.mockapi.io/actors';
 
@@ -43,11 +44,10 @@ const SearchScreen = () => {
       if (responseJson.info && responseJson.info.next) {
         setNextPage(responseJson.info.next);
       } else {
-        setNextPage(''); // Reset nextPage if it's undefined
+        setNextPage('');
       }
     } catch (error) {
       console.error('Error fetching data:', error);
-      // You can add error handling logic here, such as showing an error message to the user
     } finally {
       setLoading(false);
     }
@@ -62,7 +62,7 @@ const SearchScreen = () => {
     setItems([]);
     setNextPage(initialPage);
     fetchPage(initialPage);
-    shuffleItems(); // Shuffle images upon refresh
+    shuffleItems();
   };
 
   useEffect(() => {
@@ -70,8 +70,6 @@ const SearchScreen = () => {
   }, []);
 
   const handleSearch = () => {
-    // Perform search based on the searchQuery
-    // For simplicity, let's assume we're filtering items by name
     const filteredItems = items.filter(item =>
       item.name.toLowerCase().includes(searchQuery.toLowerCase()),
     );
@@ -79,7 +77,6 @@ const SearchScreen = () => {
   };
 
   const showUserName = (userName: string) => {
-    // Show the username using the Alert component
     Alert.alert('Posted by:', userName);
   };
 
@@ -98,31 +95,37 @@ const SearchScreen = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.searchContainer}>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search..."
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-        />
-        <Button title="Search" onPress={handleSearch} />
-      </View>
-      <FlatList
-        data={filteredItems.length > 0 ? filteredItems : items}
-        renderItem={renderItem}
-        keyExtractor={(item, index) => item.id + index}
-        onEndReached={() => {
-          if (nextPage) {
-            fetchPage(nextPage);
-          }
-        }}
-        onEndReachedThreshold={0.1}
-        ListFooterComponent={() => loading && <ActivityIndicator />}
-        refreshing={loading}
-        onRefresh={onRefresh}
-        numColumns={3} // To display images in multiple columns
-        columnWrapperStyle={styles.columnWrapper} // To provide spacing between columns
-      />
+      {loading ? (
+        <SkeletonSearchScreen />
+      ) : (
+        <View>
+          <View style={styles.searchContainer}>
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Search..."
+              value={searchQuery}
+              onChangeText={setSearchQuery}
+            />
+            <Button title="Search" onPress={handleSearch} />
+          </View>
+          <FlatList
+            data={filteredItems.length > 0 ? filteredItems : items}
+            renderItem={renderItem}
+            keyExtractor={(item, index) => item.id + index}
+            onEndReached={() => {
+              if (nextPage) {
+                fetchPage(nextPage);
+              }
+            }}
+            onEndReachedThreshold={0.1}
+            ListFooterComponent={() => loading && <ActivityIndicator />}
+            refreshing={loading}
+            onRefresh={onRefresh}
+            numColumns={3}
+            columnWrapperStyle={styles.columnWrapper}
+          />
+        </View>
+      )}
     </View>
   );
 };
@@ -148,13 +151,13 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   touchable: {
-    marginBottom: 0, // Remove margin bottom
+    marginBottom: 0,
   },
   itemContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    margin: 0, // Remove margin
+    margin: 0,
   },
   image: {
     width: 100,

@@ -3,6 +3,7 @@ import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import MenuButton from '../../assets/profilepage/menubutton.svg';
 import LogOutScreen from '../logout/LogOutScreen';
+import EditProfile from '../editprofile/EditProfileScreen';
 const Drawer = createDrawerNavigator();
 
 const ProfileScreen = ({navigation}: {navigation: any}) => {
@@ -46,7 +47,7 @@ const ProfileScreen = ({navigation}: {navigation: any}) => {
           </View>
         </View>
       </View>
-      {/* Photos */}
+
       <View style={styles.photosContainer}>
         <Image
           source={{uri: 'https://via.placeholder.com/150'}}
@@ -76,6 +77,7 @@ const DrawerNavigation = () => {
         },
       }}>
       <Drawer.Screen name="Settings and Activity" component={ProfileScreen} />
+      <Drawer.Screen name="EditProfile" component={EditProfile} />
       <Drawer.Screen name="LogOut" component={LogOutScreen} />
     </Drawer.Navigator>
   );

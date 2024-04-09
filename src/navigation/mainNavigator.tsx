@@ -1,7 +1,6 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {RootStackParamList} from './RootStackParamList';
-import HomeScreen from '../screens/home/HomeScreen';
 import SearchScreen from '../screens/searchscreen/SearchScreen';
 import AddPostScreen from '../screens/addpostscreen/AddPostScreen';
 import MyTabBar from '../components/organisms/tabbar/CustomTabBar';
@@ -13,6 +12,7 @@ import AddPostIcon from '../assets/homepage/addpost.svg';
 import ReelsIcon from '../assets/homepage/reels.svg';
 import ProfileIcon from '../assets/homepage/msgpage-icon.svg';
 import HomeNavigation from './HomeNavigation';
+import UserScreen from '../screens/userscreen/userscreen';
 const MainStackNavigator = createBottomTabNavigator<RootStackParamList>();
 
 const MainNavigator = () => {
@@ -63,12 +63,10 @@ const MainNavigator = () => {
       />
       <MainStackNavigator.Screen
         name="Profile"
-        component={UserProfileScreen}
+        component={UserScreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({size}) => (
-            <ProfileIcon width={size} height={size} /> // Fixed color
-          ),
+          tabBarIcon: ({size}) => <ProfileIcon width={size} height={size} />,
         }}
       />
     </MainStackNavigator.Navigator>

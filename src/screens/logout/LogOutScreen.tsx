@@ -35,9 +35,7 @@ const LogOutScreen: React.FC<Props> = ({navigation}) => {
     <View style={styles.container}>
       <TouchableOpacity
         onPress={() => navigation.goBack()}
-        style={styles.backButton}>
-        <Text style={styles.backButtonText}>{'<<<<'}</Text>
-      </TouchableOpacity>
+        style={styles.backButton}></TouchableOpacity>
       <Text style={styles.title}>Log Out Screen</Text>
       <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
         <Text style={styles.logoutText}>Log Out</Text>
@@ -72,11 +70,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 20,
     left: 20,
-  },
-  backButtonText: {
-    fontSize: 16,
-    color: 'blue',
-    fontWeight: 'bold',
   },
 });
 

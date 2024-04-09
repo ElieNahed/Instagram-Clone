@@ -15,6 +15,7 @@ import LikeIcon from '../../assets/homepage/Like.svg';
 import CommentIcon from '../../assets/homepage/Comment.svg';
 import ShareIcon from '../../assets/homepage/Share.svg';
 import SaveIcon from '../../assets/homepage/Save.svg';
+import notifee from '@notifee/react-native';
 
 interface Actor {
   id: string;
@@ -50,11 +51,40 @@ const HomeScreen = () => {
     }
   };
 
-  const incrementLikeCount = (actorId: string) => {
+  const incrementLikeCount = async (actorId: string) => {
     setLikeCounts(prevCounts => ({
       ...prevCounts,
       [actorId]: prevCounts[actorId] + 1,
     }));
+
+    // Display notification when like button is clicked
+    try {
+      await notifee.requestPermission();
+      const channelId = await notifee.createChannel({
+        id: 'default',
+        name: 'Default Channel',
+        vibration: true,
+        vibrationPattern: [500, 1000],
+      });
+
+      const actor = actors.find(actor => actor.id === actorId);
+      if (actor) {
+        const message = `You just like ${actor.name}'s post `;
+        await notifee.displayNotification({
+          title: 'New Notification',
+          body: message,
+          android: {
+            channelId,
+            vibrationPattern: [500, 1000],
+            pressAction: {
+              id: 'default',
+            },
+          },
+        });
+      }
+    } catch (error) {
+      console.error('Error displaying notification:', error);
+    }
   };
 
   const decrementLikeCount = (actorId: string) => {

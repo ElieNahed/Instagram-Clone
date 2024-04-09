@@ -41,7 +41,11 @@ const HomeNavigation = () => {
         options={{headerShown: false}}
       />
       <Tab.Screen name="MessageScreen" component={MessageScreen} />
-      <Tab.Screen name="Notification" component={NotificationScreen} />
+      <Tab.Screen
+        name="Notification"
+        component={NotificationScreen}
+        options={{headerShown: false}}
+      />
     </Tab.Navigator>
   );
 };

@@ -120,7 +120,7 @@ const HomeScreen = () => {
           <SaveIcon width={30} height={30} />
         </Pressable>
       </View>
-      <Text style={styles.likeCount}>{likeCounts[item.id]}</Text>
+      <Text style={styles.likeCount}>like:{likeCounts[item.id]}</Text>
     </View>
   );
 

@@ -22,7 +22,7 @@ const MyDrawer = () => {
         drawerPosition: 'right',
         drawerType: 'slide',
       }}>
-      <Drawer.Screen name="Profile" component={ProfileScreen} />
+      <Drawer.Screen name="Username" component={ProfileScreen} />
       <Drawer.Screen name="About" component={UserAbout} />
       <Drawer.Screen name="Logout" component={LogoutScreen} />
     </Drawer.Navigator>

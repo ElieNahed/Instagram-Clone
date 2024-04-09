@@ -21,7 +21,7 @@ const PostsScreen = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get<iUserData[]>(
-          'https://660fd81d0640280f219b9867.mockapi.io/api/hub/user',
+          'https://66152deb2fc47b4cf27e3622.mockapi.io/user/user',
         );
         if (response.data && response.data.length > 0) {
           setUserData(response.data[0]);

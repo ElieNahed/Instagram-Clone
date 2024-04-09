@@ -12,7 +12,7 @@ import AddPostIcon from '../assets/homepage/addpost.svg';
 import ReelsIcon from '../assets/homepage/reels.svg';
 import ProfileIcon from '../assets/homepage/msgpage-icon.svg';
 import HomeNavigation from './HomeNavigation';
-import UserScreen from '../screens/userscreen/userscreen';
+import UserScreen from '../screens/userscreen/UserScreen';
 const MainStackNavigator = createBottomTabNavigator<RootStackParamList>();
 
 const MainNavigator = () => {

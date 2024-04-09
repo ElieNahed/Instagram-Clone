@@ -6,5 +6,5 @@ export const GalleryIcon = () => {
   return <Gallery width={25} height={25} />;
 };
 export const FavoriteIcon = () => {
-  return <Save width={25} height={25} />;
+  return <Save width={35} height={35} />;
 };

@@ -1,131 +1,113 @@
-import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import {createDrawerNavigator} from '@react-navigation/drawer';
-import MenuButton from '../../assets/profilepage/menubutton.svg';
-import LogOutScreen from '../logout/LogOutScreen';
-import EditProfile from '../editprofile/EditProfileScreen';
+import React, {useState, useEffect} from 'react';
+import {View, Text, Image, ActivityIndicator, Pressable} from 'react-native';
+import axios from 'axios';
+import styles from './styles';
+import ProfileNavigation from '../../navigation/ProfileNavigation';
 
-const Drawer = createDrawerNavigator();
+export interface iUserData {
+  name: string;
+  avatar: string;
+  followers: number;
+  following: number;
+  bio: string;
+  posts: iPostData[];
+}
 
-const ProfileScreen = ({navigation}: {navigation: any}) => {
+export interface iPostData {
+  id: string;
+  image: string;
+  caption: string;
+}
+
+const ProfileScreen = ({navigation}: any) => {
+  const [userData, setUserData] = useState<iUserData | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get<iUserData[]>(
+          'https://660fd81d0640280f219b9867.mockapi.io/api/hub/user',
+        );
+        if (response.data && response.data.length > 0) {
+          setUserData(response.data[0]);
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get<iUserData[]>(
+          'https://660fd81d0640280f219b9867.mockapi.io/api/hub/user',
+        );
+        if (response.data && response.data.length > 0) {
+          setUserData(response.data[0]);
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+    const unsubscribe = navigation.addListener('focus', () => {
+      fetchData();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        {/* User name */}
-        <Text style={styles.userName}>User Name</Text>
-        {/* Menu Toggle Button */}
-        <TouchableOpacity
-          style={styles.menuButton}
-          onPress={() => navigation.openDrawer()}>
-          {/* Adjust the size of MenuButton component */}
-          <MenuButton width={20} height={20} />
-        </TouchableOpacity>
-      </View>
-      {/* Gray placeholder image */}
-      <View style={styles.profileSection}>
-        <View style={styles.profilePictureContainer}>
-          <View style={styles.grayPlaceholder} />
-        </View>
-        <View style={styles.counterItems}>
-          <View style={styles.statItem}>
-            <Text style={[styles.statNumber, styles.smallerText]}>100</Text>
-            <Text style={[styles.statLabel, styles.smallerText]}>Posts</Text>
+    <View style={styles.viewContainer}>
+      {userData ? (
+        <>
+          <View style={styles.userDataContainer}>
+            <View>
+              <Image source={{uri: userData.avatar}} style={styles.avatar} />
+            </View>
+            <View style={styles.ffContainer}>
+              <View style={styles.ffCol}>
+                <Text style={styles.ffNumbers}>{userData.posts.length}</Text>
+                <Text style={styles.ffLabel}>Posts</Text>
+              </View>
+              <View style={styles.ffCol}>
+                <Text style={styles.ffNumbers}>{userData.followers}</Text>
+                <Text style={styles.ffLabel}>Followers</Text>
+              </View>
+              <View style={styles.ffCol}>
+                <Text style={styles.ffNumbers}>{userData.following}</Text>
+                <Text style={styles.ffLabel}>Following</Text>
+              </View>
+            </View>
           </View>
-          <View style={styles.statItem}>
-            <Text style={[styles.statNumber, styles.smallerText]}>100k</Text>
-            <Text style={[styles.statLabel, styles.smallerText]}>
-              Followers
-            </Text>
+          <Text style={styles.text}>{userData.name}</Text>
+          <Text style={styles.text}>{userData.bio}</Text>
+          <View style={styles.profileButtonsContainer}>
+            <Pressable>
+              <View style={styles.profileButtons}>
+                <Pressable
+                  onPress={() => {
+                    navigation.navigate('About Account');
+                  }}>
+                  <Text style={styles.buttonTitles}>Edit Profile</Text>
+                </Pressable>
+              </View>
+            </Pressable>
+            <Pressable>
+              <View style={styles.profileButtons}>
+                <Text style={styles.buttonTitles}>Share Profile</Text>
+              </View>
+            </Pressable>
           </View>
-          <View style={styles.statItem}>
-            <Text style={[styles.statNumber, styles.smallerText]}>100</Text>
-            <Text style={[styles.statLabel, styles.smallerText]}>
-              Following
-            </Text>
-          </View>
-        </View>
-      </View>
-
-      <View style={styles.photosContainer}>{/* Photos */}</View>
+          <ProfileNavigation />
+        </>
+      ) : (
+        <ActivityIndicator />
+      )}
     </View>
   );
 };
 
-const DrawerNavigation = () => {
-  return (
-    <Drawer.Navigator
-      screenOptions={{
-        drawerPosition: 'right',
-        headerShown: false,
-        drawerStyle: {
-          width: 250,
-        },
-      }}>
-      <Drawer.Screen name="Settings and Activity" component={ProfileScreen} />
-      <Drawer.Screen name="EditProfile" component={EditProfile} />
-      <Drawer.Screen name="LogOut" component={LogOutScreen} />
-    </Drawer.Navigator>
-  );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 20,
-  },
-  userName: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  menuButton: {
-    padding: 10,
-    backgroundColor: '#eee',
-    borderRadius: 5,
-  },
-  profileSection: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  profilePictureContainer: {
-    marginRight: 20,
-  },
-  grayPlaceholder: {
-    width: 80,
-    height: 80,
-    backgroundColor: '#ccc',
-    borderRadius: 40,
-  },
-  counterItems: {
-    flexDirection: 'row',
-    marginLeft: 15,
-  },
-  statItem: {
-    alignItems: 'center',
-    marginRight: 15,
-  },
-  statNumber: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  statLabel: {
-    fontSize: 16,
-    color: '#666',
-  },
-  photosContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-  },
-  smallerText: {
-    fontSize: 16,
-  },
-});
-
-export default DrawerNavigation;
+export default ProfileScreen;

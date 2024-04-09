@@ -1,41 +1,43 @@
 import {StyleSheet} from 'react-native';
 
-const apiStyles = StyleSheet.create({
+const styles = StyleSheet.create({
   viewContainer: {
     flex: 1,
-    backgroundColor: '#408EC6',
+    backgroundColor: '#fff',
   },
-  rowContainer: {
+  avatar: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginBottom: 20,
+  },
+  userName: {color: '#000'},
+  userDataContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    marginTop: 20,
+  },
+  ffContainer: {flexDirection: 'row'},
+  ffCol: {flexDirection: 'column'},
+  ffNumbers: {fontSize: 22, textAlign: 'center', color: '#000'},
+  ffLabel: {textAlign: 'center', marginHorizontal: 10, color: '#000'},
+  profileButtons: {
+    padding: 10,
+    paddingHorizontal: 45,
+    borderRadius: 11,
+    backgroundColor: 'blue',
+  },
+  profileButtonsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: 5,
-    marginHorizontal: 10,
-    columnGap: 10,
+    marginBottom: 30,
   },
-  container: {
-    flex: 1,
-    backgroundColor: '#408EC6',
+  buttonTitles: {color: '#F3F8FF'},
+  postsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
-  item: {
-    backgroundColor: '#1E2761',
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
-    width: '90%',
-    height: 340,
-  },
-  image: {
-    width: '100%',
-    height: '80%',
-    resizeMode: 'cover',
-  },
-  album: {
-    // Define the 'album' style
-    backgroundColor: '#FFFFFF', // Add your desired styles for the album container
-    padding: 10,
-    marginVertical: 8,
-    marginHorizontal: 16,
-  },
+  text: {color: '#000'},
 });
-
-export default apiStyles;
+export default styles;

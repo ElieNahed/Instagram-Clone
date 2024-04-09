@@ -39,7 +39,7 @@ const HomeScreen = () => {
       );
       const data: Actor[] = await response.json();
       setActors(data);
-      // Initialize like counts for each actor to 0
+
       const initialLikeCounts: {[key: string]: number} = {};
       data.forEach(actor => {
         initialLikeCounts[actor.id] = 0;
@@ -65,14 +65,10 @@ const HomeScreen = () => {
   };
 
   const handleShare = (actorId: string) => {
-    // Implement the share functionality here
-    // For example, you can use the Share API from React Native to share content
     console.log('Shared actor:', actorId);
   };
 
   const handleSave = (actorId: string) => {
-    // Implement the save functionality here
-    // For example, you can save the actor to a list of saved items
     console.log('Saved actor:', actorId);
   };
 
@@ -106,11 +102,7 @@ const HomeScreen = () => {
             strokeWidth={likeCounts[item.id] > 0 ? 3 : 0} // Set stroke width to 3 if liked, 0 otherwise
           />
         </Pressable>
-        <Pressable
-          style={styles.commentIconContainer}
-          onPress={() => {
-            navigation.navigate('CommentScreen');
-          }}>
+        <Pressable style={styles.commentIconContainer}>
           <CommentIcon width={25} height={25} />
         </Pressable>
         <Pressable

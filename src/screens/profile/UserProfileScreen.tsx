@@ -1,25 +1,18 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, Image, ActivityIndicator, Pressable} from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
+import {RootState} from '../../store/store';
+import {iUserData} from '../../utils/type';
+import {setAvatarImage} from '../../store/avatarSlice';
 import axios from 'axios';
 import styles from './styles';
 import ProfileNavigation from '../../navigation/ProfileNavigation';
 
-export interface iUserData {
-  name: string;
-  avatar: string;
-  followers: number;
-  following: number;
-  bio: string;
-  posts: iPostData[];
-}
-
-export interface iPostData {
-  id: string;
-  image: string;
-  caption: string;
-}
-
 const ProfileScreen = ({navigation}: any) => {
+  const dispatch = useDispatch();
+  const avatarImage = useSelector(
+    (state: RootState) => state.avatar.avatarImage,
+  );
   const [userData, setUserData] = useState<iUserData | null>(null);
 
   useEffect(() => {
@@ -30,6 +23,7 @@ const ProfileScreen = ({navigation}: any) => {
         );
         if (response.data && response.data.length > 0) {
           setUserData(response.data[0]);
+          dispatch(setAvatarImage(response.data[0].avatar));
         }
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -37,27 +31,7 @@ const ProfileScreen = ({navigation}: any) => {
     };
 
     fetchData();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get<iUserData[]>(
-          'https://66152deb2fc47b4cf27e3622.mockapi.io/user/user',
-        );
-        if (response.data && response.data.length > 0) {
-          setUserData(response.data[0]);
-        }
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    };
-    const unsubscribe = navigation.addListener('focus', () => {
-      fetchData();
-    });
-
-    return unsubscribe;
-  }, [navigation]);
+  }, [dispatch]);
 
   return (
     <View style={styles.viewContainer}>
@@ -65,7 +39,10 @@ const ProfileScreen = ({navigation}: any) => {
         <>
           <View style={styles.userDataContainer}>
             <View>
-              <Image source={{uri: userData.avatar}} style={styles.avatar} />
+              <Image
+                source={{uri: avatarImage || userData.avatar}}
+                style={styles.avatar}
+              />
             </View>
             <View style={styles.ffContainer}>
               <View style={styles.ffCol}>

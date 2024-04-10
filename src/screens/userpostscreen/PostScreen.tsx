@@ -7,8 +7,8 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import styles from './styles';
-import {iUserData} from '../profile/UserProfileScreen';
 import axios from 'axios';
+import {iUserData} from '../../utils/type';
 
 const PostsScreen = () => {
   const [userData, setUserData] = useState<iUserData | null>(null);

@@ -6,6 +6,10 @@ import MainNavigator from './src/navigation/mainNavigator';
 import UnAuthSatck from './src/navigation/UnAuthSatck';
 import useAuthStore from './src/store/authStore';
 
+interface AuthData {
+  authToken: string | null;
+}
+
 const linking = {
   prefixes: ['Instagram-Clone://'],
   config: {
@@ -14,22 +18,25 @@ const linking = {
       Home: 'home',
       Search: 'search',
       AddPost: 'add post',
-      Reels: 'Reels',
+      Reels: 'reels',
       Profile: 'profile',
     },
   },
 };
 
 const App = () => {
-  const {authToken} = useAuthStore();
+  const {authToken}: AuthData = useAuthStore() as AuthData;
+
   useEffect(() => {
     setTimeout(() => {
       BootSplash.hide();
     });
   }, []);
+
   return (
     <SafeAreaProvider>
       <NavigationContainer linking={linking}>
+        {/* Use conditional rendering based on the presence of authToken */}
         {authToken !== null ? <MainNavigator /> : <UnAuthSatck />}
       </NavigationContainer>
     </SafeAreaProvider>

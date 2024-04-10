@@ -22,6 +22,7 @@ const LoginScreen = () => {
   const [password, setPassword] = useState('0lelplR');
   const [loading, setLoading] = useState(false);
   const [errorModalVisible, setErrorModalVisible] = useState(false);
+  const [passHidden, setPassHidden] = useState(true);
 
   const {setAuthToken} = useAuthStore();
 
@@ -43,11 +44,11 @@ const LoginScreen = () => {
     }
   };
 
-  const [passHidden, setPassHidden] = useState(true);
-
   const toggleVisibility = () => {
     setPassHidden(prev => !prev);
   };
+
+  const isLoginDisabled = !username || !password; // Check if username or password is empty
 
   return (
     <View style={styles.viewContainer}>
@@ -55,6 +56,7 @@ const LoginScreen = () => {
         source={require('../../assets/lunchphoto/instaram-icon.png')}
         style={styles.image}
       />
+      <Text style={styles.welcomeText}>Welcome back!</Text>
       <View style={styles.formContainer}>
         <Text style={styles.formLabel}>Username:</Text>
         <View style={styles.inputField}>
@@ -84,7 +86,7 @@ const LoginScreen = () => {
         </View>
 
         <View style={styles.loginButton}>
-          <Button title="Login" onPress={onLogin} />
+          <Button title="Login" onPress={onLogin} disabled={isLoginDisabled} />
         </View>
       </View>
       <Modal visible={errorModalVisible} animationType="fade" transparent>

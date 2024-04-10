@@ -10,8 +10,11 @@ const styles = StyleSheet.create({
   title: {color: '#000'},
   formContainer: {
     width: '65%',
-    padding: 5,
+    padding: 10,
     margin: 10,
+    borderWidth: 2,
+    borderColor: '#ccc',
+    borderRadius: 15,
   },
   formLabel: {
     color: '#000',
@@ -30,24 +33,37 @@ const styles = StyleSheet.create({
   loginButton: {alignSelf: 'center'},
   image: {height: 100, width: 100},
   modalContainer: {
-    backgroundColor: '#500',
-    width: '75%',
-    position: 'absolute',
-    top: 50,
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    width: '80%',
     alignSelf: 'center',
-    borderWidth: 1,
-    borderColor: '#f00',
-    borderRadius: 11,
+    borderRadius: 20,
+    padding: 20,
   },
   modalContent: {
     alignSelf: 'center',
-    padding: 10,
   },
-  modalText: {color: '#F3F8FF'},
-  modalCloseText: {color: '#F3F8FF', textAlign: 'right', marginTop: 10},
+  modalText: {
+    color: '#FFF',
+    fontSize: 16,
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  modalCloseText: {
+    color: '#FFF',
+    textAlign: 'center',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
 
   successButton: {
     backgroundColor: 'green',
+  },
+
+  welcomeText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 10,
   },
 });
 export default styles;

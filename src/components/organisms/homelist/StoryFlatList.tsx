@@ -1,5 +1,9 @@
+// StoryFlatList.js
+
 import React from 'react';
 import {View, Text, StyleSheet, FlatList, Image} from 'react-native';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../../store/store';
 
 interface Actor {
   id: string;
@@ -12,6 +16,10 @@ interface StoryFlatListProps {
 }
 
 const StoryFlatList = ({data}: StoryFlatListProps) => {
+  const avatarImage = useSelector(
+    (state: RootState) => state.avatar.avatarImage,
+  );
+
   const renderActorItem = ({item}: {item: Actor}) => (
     <View style={styles.actorItem}>
       <Image source={{uri: item.image}} style={styles.actorImage} />
@@ -19,17 +27,23 @@ const StoryFlatList = ({data}: StoryFlatListProps) => {
     </View>
   );
 
-  // Placeholder user icon
   const renderUserIcon = () => (
     <View style={styles.userIconContainer}>
-      <View style={styles.userIcon}></View>
+      <View style={styles.userIcon}>
+        {avatarImage ? (
+          <Image source={{uri: avatarImage}} style={styles.actorImage} />
+        ) : null}
+      </View>
       <Text style={styles.storyText}>Your Story</Text>
     </View>
   );
 
-  // Include the user icon as the first item in the data array
   const dataWithUserIcon: Actor[] = [
-    {id: 'userIcon', name: 'Your Name', image: 'https://your.image.url'},
+    {
+      id: 'userIcon',
+      name: 'Your Name',
+      image: avatarImage || '../../../assets/profilepage/noprofilepic.jpg',
+    },
     ...data,
   ];
 
@@ -79,7 +93,6 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     borderRadius: 35,
-    backgroundColor: 'gray',
   },
   storyText: {
     marginTop: 5,

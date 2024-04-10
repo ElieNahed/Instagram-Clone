@@ -1,7 +1,7 @@
 import React from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import PostsScreen from '../screens/userpostscreen/PostScreen';
-import SavedScreen from '../screens/saveedscreen/SaveScreen';
+import SavedScreen from '../screens/savedscreen/SaveScreen';
 import {FavoriteIcon, GalleryIcon} from '../components/atoms/ProfileNavIcons';
 
 const Tab = createMaterialTopTabNavigator();

@@ -7,6 +7,7 @@ import {
   Dimensions,
   Text,
   Pressable,
+  RefreshControl,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import StoryFlatList from '../../components/organisms/homelist/StoryFlatList';
@@ -17,6 +18,7 @@ import ShareIcon from '../../assets/homepage/Share.svg';
 import SaveIcon from '../../assets/homepage/Save.svg';
 import notifee from '@notifee/react-native';
 import styles from './styles';
+
 interface Actor {
   id: string;
   name: string;
@@ -27,6 +29,7 @@ const HomeScreen = () => {
   const navigation = useNavigation();
   const [actors, setActors] = useState<Actor[]>([]);
   const [likeCounts, setLikeCounts] = useState<{[key: string]: number}>({});
+  const [refreshing, setRefreshing] = useState(false);
   const screenWidth = Dimensions.get('window').width;
 
   useEffect(() => {
@@ -46,9 +49,16 @@ const HomeScreen = () => {
         initialLikeCounts[actor.id] = 0;
       });
       setLikeCounts(initialLikeCounts);
+      setRefreshing(false); // Finish refreshing
     } catch (error) {
       console.error('Error fetching actors:', error);
+      setRefreshing(false); // Finish refreshing even if there's an error
     }
+  };
+
+  const onRefresh = () => {
+    setRefreshing(true); // Start refreshing
+    fetchActors();
   };
 
   const incrementLikeCount = async (actorId: string) => {
@@ -162,6 +172,9 @@ const HomeScreen = () => {
         renderItem={renderActorItem}
         keyExtractor={item => item.id}
         contentContainerStyle={styles.actorListContainer}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       />
     </View>
   );

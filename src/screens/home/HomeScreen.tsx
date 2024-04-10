@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
   iconContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between', // Align items with space between them
+    justifyContent: 'space-between',
     marginTop: 5,
     alignSelf: 'flex-start',
   },

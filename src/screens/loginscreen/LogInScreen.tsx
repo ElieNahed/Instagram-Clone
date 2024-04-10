@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -7,6 +7,8 @@ import {
   ActivityIndicator,
   Image,
   Modal,
+  Animated,
+  Easing,
 } from 'react-native';
 import LockSvg from '../../assets/login/Lock.svg';
 import UserSvg from '../../assets/login/User.svg';
@@ -25,6 +27,23 @@ const LoginScreen = () => {
   const [passHidden, setPassHidden] = useState(true);
 
   const {setAuthToken} = useAuthStore();
+
+  const backgroundColorAnim = new Animated.Value(0);
+  const backgroundColor = backgroundColorAnim.interpolate({
+    inputRange: [0, 1, 2, 3],
+    outputRange: ['yellow', 'green', 'gray', 'red'], // Replace 'blue' and 'green' with your desired colors
+  });
+
+  useEffect(() => {
+    Animated.loop(
+      Animated.timing(backgroundColorAnim, {
+        toValue: 3,
+        duration: 5000,
+        easing: Easing.linear,
+        useNativeDriver: false,
+      }),
+    ).start();
+  }, []);
 
   const onLogin = async () => {
     try {
@@ -48,10 +67,10 @@ const LoginScreen = () => {
     setPassHidden(prev => !prev);
   };
 
-  const isLoginDisabled = !username || !password; // Check if username or password is empty
+  const isLoginDisabled = !username || !password;
 
   return (
-    <View style={styles.viewContainer}>
+    <Animated.View style={[styles.viewContainer, {backgroundColor}]}>
       <Image
         source={require('../../assets/lunchphoto/instaram-icon.png')}
         style={styles.image}
@@ -101,7 +120,7 @@ const LoginScreen = () => {
           </View>
         </View>
       </Modal>
-    </View>
+    </Animated.View>
   );
 };
 

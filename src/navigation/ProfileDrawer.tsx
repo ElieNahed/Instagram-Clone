@@ -23,7 +23,7 @@ const ProfileDrawer = () => {
         drawerPosition: 'right',
         drawerType: 'slide',
       }}>
-      <Drawer.Screen name="Username" component={ProfileScreen} />
+      <Drawer.Screen name="Profile" component={ProfileScreen} />
       <Drawer.Screen name="Edit Profile" component={EditProfile} />
       <Drawer.Screen name="Logout" component={LogoutScreen} />
     </Drawer.Navigator>

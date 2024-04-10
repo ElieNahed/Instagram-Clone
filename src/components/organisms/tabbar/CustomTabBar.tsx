@@ -6,14 +6,14 @@ interface TabBarProps {
   state: any;
   descriptors: any;
   navigation: any;
-  icons: any; // Pass icons as props
+  icons: any;
 }
 
 const MyTabBar = ({
   state,
   descriptors,
   navigation,
-  icons, // Receive icons as props
+  icons,
 }: PropsWithChildren<TabBarProps>) => {
   return (
     <>
@@ -41,7 +41,6 @@ const MyTabBar = ({
             });
           };
 
-          // Get the corresponding icon for the route
           const Icon = icons[index];
 
           return (
@@ -55,11 +54,10 @@ const MyTabBar = ({
                 tabStyles.tabButton,
                 isFocused ? tabStyles.tabButtonFocused : null,
               ]}>
-              {/* Render the SVG icon */}
               <Icon
                 width={24}
                 height={24}
-                fill={isFocused ? 'blue' : 'white'}
+                fill={isFocused ? 'gray' : 'white'}
               />
             </TouchableOpacity>
           );

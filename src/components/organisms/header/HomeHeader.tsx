@@ -39,9 +39,10 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontFamily: 'Pacifico-Regular',
+    fontFamily: 'serif',
     marginLeft: 10,
     flex: 0.6,
+    color: 'black',
   },
   viewButtonsContainer: {
     flex: 0.4,

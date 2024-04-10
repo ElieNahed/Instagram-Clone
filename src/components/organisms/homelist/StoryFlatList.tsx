@@ -68,6 +68,8 @@ const styles = StyleSheet.create({
   },
   actorName: {
     marginTop: 5,
+    color: 'black',
+    fontFamily: 'Serif',
   },
   userIconContainer: {
     marginRight: 10,
@@ -77,7 +79,7 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     borderRadius: 35,
-    backgroundColor: 'gray', // Placeholder color
+    backgroundColor: 'gray',
   },
   storyText: {
     marginTop: 5,

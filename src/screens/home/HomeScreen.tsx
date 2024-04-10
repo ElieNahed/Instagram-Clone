@@ -96,6 +96,7 @@ const HomeScreen = () => {
 
   const handleShare = (actorId: string) => {
     console.log('Shared actor:', actorId);
+    // Implement share functionality here
   };
 
   const handleSave = (actorId: string) => {
@@ -136,19 +137,15 @@ const HomeScreen = () => {
           <CommentIcon width={25} height={25} />
         </Pressable>
         <Pressable
-          style={styles.commentIconContainer}
-          onPress={() => {
-            handleShare(item.id);
-          }}>
+          style={styles.shareIconContainer}
+          onPress={() => handleShare(item.id)}>
           <ShareIcon width={30} height={30} />
         </Pressable>
-        <Pressable
-          style={styles.saveIconContainer}
-          onPress={() => {
-            handleSave(item.id);
-          }}>
-          <SaveIcon width={30} height={30} />
-        </Pressable>
+        <View style={styles.saveIconContainer}>
+          <Pressable onPress={() => handleSave(item.id)}>
+            <SaveIcon width={40} height={40} />
+          </Pressable>
+        </View>
       </View>
       <Text style={styles.likeCount}>like:{likeCounts[item.id]}</Text>
     </View>
@@ -224,8 +221,13 @@ const styles = StyleSheet.create({
   commentIconContainer: {
     marginRight: 10,
   },
-  saveIconContainer: {
+  shareIconContainer: {
     marginRight: 10,
+  },
+  saveIconContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
   },
   likeCount: {
     fontSize: 16,

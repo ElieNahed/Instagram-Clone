@@ -1,5 +1,3 @@
-// ProfileScreen.js
-
 import React, {useEffect, useState} from 'react';
 import {View, Text, Image, ActivityIndicator, Pressable} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';

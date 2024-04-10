@@ -5,6 +5,9 @@ import {
   Image,
   Dimensions,
   ActivityIndicator,
+  Modal,
+  TouchableOpacity,
+  Text,
 } from 'react-native';
 import styles from './styles';
 import axios from 'axios';
@@ -13,8 +16,8 @@ import {iUserData} from '../../utils/type';
 const PostsScreen = () => {
   const [userData, setUserData] = useState<iUserData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-
-  const {width} = Dimensions.get('window');
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const {width, height} = Dimensions.get('window');
   const imageWidth = width / 3;
 
   useEffect(() => {
@@ -37,12 +40,14 @@ const PostsScreen = () => {
   }, []);
 
   const renderPostItem = ({item}: {item: {id: string; image: string}}) => (
-    <View key={item.id}>
+    <TouchableOpacity
+      key={item.id}
+      onPress={() => setSelectedImage(item.image)}>
       <Image
         source={{uri: `${item.image}`}}
         style={{width: imageWidth, height: imageWidth}}
       />
-    </View>
+    </TouchableOpacity>
   );
 
   return (
@@ -50,12 +55,39 @@ const PostsScreen = () => {
       {loading ? (
         <ActivityIndicator />
       ) : (
-        <FlatList
-          data={userData?.posts || []}
-          renderItem={renderPostItem}
-          keyExtractor={item => item.id.toString()}
-          numColumns={3}
-        />
+        <>
+          <FlatList
+            data={userData?.posts || []}
+            renderItem={renderPostItem}
+            keyExtractor={item => item.id.toString()}
+            numColumns={3}
+          />
+          <Modal
+            visible={!!selectedImage}
+            transparent={true}
+            onRequestClose={() => setSelectedImage(null)}>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: 'rgba(0, 0, 0, 0.7)',
+              }}>
+              <TouchableOpacity
+                style={{position: 'absolute', top: 20, right: 20, zIndex: 1}}
+                onPress={() => setSelectedImage(null)}>
+                <Text style={{color: 'white', fontSize: 18}}>Close</Text>
+              </TouchableOpacity>
+              {selectedImage && (
+                <Image
+                  source={{uri: selectedImage}}
+                  style={{width, height}}
+                  resizeMode="contain"
+                />
+              )}
+            </View>
+          </Modal>
+        </>
       )}
     </View>
   );

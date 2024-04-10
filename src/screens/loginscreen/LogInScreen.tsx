@@ -4,7 +4,6 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  Pressable,
   ActivityIndicator,
   Image,
   Modal,
@@ -12,7 +11,8 @@ import {
 import LockSvg from '../../assets/login/LockSvg.svg';
 import UserSvg from '../../assets/login/UserSvg.svg';
 import VisibleSvg from '../../assets/login/VisibleSvg.svg';
-import LoginSvg from '../../assets/login/LoginSvg.svg';
+import Button from '../../components/atoms/Button'; // Import the Button component
+
 import styles from './styles';
 import axios from 'axios';
 import useAuthStore from '../../store/authStore';
@@ -43,7 +43,7 @@ const LoginScreen = () => {
     }
   };
 
-  const [passHidden, setPassHidden] = useState<false | true>(true);
+  const [passHidden, setPassHidden] = useState(true);
 
   const toggleVisibility = () => {
     setPassHidden(prev => !prev);
@@ -64,11 +64,11 @@ const LoginScreen = () => {
             value={username}
             style={styles.inputText}
             placeholder="Enter username here"
-            placeholderTextColor={'#cdcdcd'}
+            placeholderTextColor="#cdcdcd"
           />
         </View>
         <Text style={styles.formLabel}>Password:</Text>
-        <View style={styles.inputField}>
+        <View style={[styles.inputField, {marginBottom: 20}]}>
           <LockSvg width={20} height={20} />
           <TextInput
             onChangeText={setPassword}
@@ -76,20 +76,15 @@ const LoginScreen = () => {
             secureTextEntry={passHidden}
             style={styles.inputText}
             placeholder="Enter password here"
-            placeholderTextColor={'#cdcdcd'}
+            placeholderTextColor="#cdcdcd"
           />
           <TouchableOpacity onPress={toggleVisibility}>
             <VisibleSvg width={20} height={20} />
           </TouchableOpacity>
         </View>
+
         <View style={styles.loginButton}>
-          {loading ? (
-            <ActivityIndicator />
-          ) : (
-            <Pressable onPress={onLogin}>
-              <LoginSvg height={50} width={50} />
-            </Pressable>
-          )}
+          <Button title="Login" onPress={onLogin} />
         </View>
       </View>
       <Modal visible={errorModalVisible} animationType="fade" transparent>

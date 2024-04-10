@@ -5,21 +5,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
-    backgroundColor: '#222',
+    backgroundColor: '#fff',
   },
-  title: {color: '#F3F8FF'},
+  title: {color: '#000'},
   formContainer: {
     width: '65%',
     padding: 5,
     margin: 10,
   },
   formLabel: {
-    color: '#F3F8FF',
+    color: '#000',
     marginTop: 10,
     marginBottom: 3,
   },
   inputField: {
-    backgroundColor: '#F3F8FF',
+    backgroundColor: '#ccc',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -45,5 +45,9 @@ const styles = StyleSheet.create({
   },
   modalText: {color: '#F3F8FF'},
   modalCloseText: {color: '#F3F8FF', textAlign: 'right', marginTop: 10},
+
+  successButton: {
+    backgroundColor: 'green',
+  },
 });
 export default styles;

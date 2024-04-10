@@ -57,7 +57,6 @@ const HomeScreen = () => {
       [actorId]: prevCounts[actorId] + 1,
     }));
 
-    // Display notification when like button is clicked
     try {
       await notifee.requestPermission();
       const channelId = await notifee.createChannel({
@@ -65,6 +64,7 @@ const HomeScreen = () => {
         name: 'Default Channel',
         vibration: true,
         vibrationPattern: [500, 1000],
+        sound: 'hollow',
       });
 
       const actor = actors.find(actor => actor.id === actorId);
@@ -73,6 +73,7 @@ const HomeScreen = () => {
         await notifee.displayNotification({
           title: 'New Notification',
           body: message,
+          sound: 'hollow.mp3',
           android: {
             channelId,
             vibrationPattern: [500, 1000],
@@ -80,7 +81,7 @@ const HomeScreen = () => {
               id: 'default',
             },
           },
-        });
+        } as any);
       }
     } catch (error) {
       console.error('Error displaying notification:', error);
@@ -96,7 +97,6 @@ const HomeScreen = () => {
 
   const handleShare = (actorId: string) => {
     console.log('Shared actor:', actorId);
-    // Implement share functionality here
   };
 
   const handleSave = (actorId: string) => {

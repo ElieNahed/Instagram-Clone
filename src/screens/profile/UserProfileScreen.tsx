@@ -89,7 +89,7 @@ const ProfileScreen = ({navigation}: any) => {
               <View style={styles.profileButtons}>
                 <Pressable
                   onPress={() => {
-                    navigation.navigate('About Account');
+                    navigation.navigate('Edit Profile');
                   }}>
                   <Text style={styles.buttonTitles}>Edit Profile</Text>
                 </Pressable>

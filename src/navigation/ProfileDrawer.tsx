@@ -3,11 +3,12 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import {StyleSheet} from 'react-native';
 import ProfileScreen from '../screens/profile/UserProfileScreen';
 import LogoutScreen from '../screens/logout/LogOutScreen';
-import UserAbout from '../screens/userabout/UserAbout';
+
+import EditProfile from '../screens/edit_profile/Edit Profile';
 
 const Drawer = createDrawerNavigator();
 
-const MyDrawer = () => {
+const ProfileDrawer = () => {
   return (
     <Drawer.Navigator
       screenOptions={{
@@ -23,7 +24,7 @@ const MyDrawer = () => {
         drawerType: 'slide',
       }}>
       <Drawer.Screen name="Username" component={ProfileScreen} />
-      <Drawer.Screen name="About" component={UserAbout} />
+      <Drawer.Screen name="Edit Profile" component={EditProfile} />
       <Drawer.Screen name="Logout" component={LogoutScreen} />
     </Drawer.Navigator>
   );
@@ -41,4 +42,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MyDrawer;
+export default ProfileDrawer;

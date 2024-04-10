@@ -1,76 +1,32 @@
+import {View, Text, Pressable} from 'react-native';
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import {CommonActions, NavigationProp} from '@react-navigation/native';
+import styles from './styles';
+import useAuthStore from '../../store/authStore';
 
-interface Props {
-  navigation: NavigationProp<any>;
-}
-
-const LogOutScreen: React.FC<Props> = ({navigation}) => {
-  const handleLogout = () => {
-    // Implement your logout logic here
-    // For example, clear authentication token or any other necessary cleanups
-
-    // Assuming you have some function to clear authentication token
-    clearAuthenticationToken();
-
-    // Resetting the navigation stack to the login screen
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [{name: 'Login'}],
-      }),
-    );
+const LogOut = ({navigation}: any) => {
+  const stayLogged = () => {
+    navigation.navigate('Profile');
   };
 
-  // Function to clear authentication token
-  const clearAuthenticationToken = () => {
-    // Implement the logic to clear authentication token
-    // For example:
-    // AsyncStorage.removeItem('authToken');
-    // Or use any other method provided by your authentication system
+  const {setAuthToken} = useAuthStore();
+  const out = () => {
+    setAuthToken();
   };
-
   return (
-    <View style={styles.container}>
-      <TouchableOpacity
-        onPress={() => navigation.goBack()}
-        style={styles.backButton}></TouchableOpacity>
-      <Text style={styles.title}>Log Out Screen</Text>
-      <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-        <Text style={styles.logoutText}>Log Out</Text>
-      </TouchableOpacity>
+    <View style={styles.viewContainer}>
+      <View style={styles.propContainer}>
+        <Text style={styles.text}>Are you sure you want to log out?</Text>
+        <View style={styles.choices}>
+          <Pressable style={styles.yesButton} onPress={out}>
+            <Text style={styles.text}>Yes</Text>
+          </Pressable>
+          <Text style={styles.noButton} onPress={stayLogged}>
+            stay logged in
+          </Text>
+        </View>
+      </View>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  logoutButton: {
-    backgroundColor: 'red',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-  },
-  logoutText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  backButton: {
-    position: 'absolute',
-    top: 20,
-    left: 20,
-  },
-});
-
-export default LogOutScreen;
+export default LogOut;

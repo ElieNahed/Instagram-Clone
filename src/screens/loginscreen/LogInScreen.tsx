@@ -8,9 +8,9 @@ import {
   Image,
   Modal,
 } from 'react-native';
-import LockSvg from '../../assets/login/LockSvg.svg';
-import UserSvg from '../../assets/login/UserSvg.svg';
-import VisibleSvg from '../../assets/login/VisibleSvg.svg';
+import LockSvg from '../../assets/login/Lock.svg';
+import UserSvg from '../../assets/login/User.svg';
+import VisibleSvg from '../../assets/login/eye.svg';
 import Button from '../../components/atoms/Button'; // Import the Button component
 
 import styles from './styles';

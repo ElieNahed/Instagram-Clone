@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingHorizontal: 45,
     borderRadius: 11,
-    backgroundColor: 'blue',
+    backgroundColor: '#405DE6',
   },
   profileButtonsContainer: {
     flexDirection: 'row',

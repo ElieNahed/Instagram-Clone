@@ -17,7 +17,7 @@ const ProfileNavigation = () => {
             return <FavoriteIcon />;
           }
         },
-        tabBarActiveTintColor: '#blue',
+        tabBarActiveTintColor: '#405DE6',
         tabBarInactiveTintColor: '#F3F8FF',
         tabBarShowLabel: false,
         tabBarLabelStyle: {
@@ -31,7 +31,7 @@ const ProfileNavigation = () => {
           marginBottom: 2,
         },
         tabBarIndicatorStyle: {
-          backgroundColor: 'blue',
+          backgroundColor: '#405DE6',
         },
         tabBarStyle: {
           elevation: 0,

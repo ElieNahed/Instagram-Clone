@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     borderTopColor: '#444',
   },
   saveButton: {
-    backgroundColor: 'blue', // Changed save button background color to blue
+    backgroundColor: '#405DE6', // Changed save button background color to blue
     borderRadius: 5,
     paddingVertical: 10,
     paddingHorizontal: 20,

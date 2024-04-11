@@ -1,7 +1,12 @@
-// StoryFlatList.js
-
 import React from 'react';
-import {View, Text, StyleSheet, FlatList, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../../store/store';
 
@@ -13,36 +18,41 @@ interface Actor {
 
 interface StoryFlatListProps {
   data: Actor[];
+  onSelectImage: (image: string) => void;
 }
 
-const StoryFlatList = ({data}: StoryFlatListProps) => {
+const StoryFlatList = ({data, onSelectImage}: StoryFlatListProps) => {
   const avatarImage = useSelector(
     (state: RootState) => state.avatar.avatarImage,
   );
 
   const renderActorItem = ({item}: {item: Actor}) => (
-    <View style={styles.actorItem}>
+    <TouchableOpacity
+      onPress={() => onSelectImage(item.image)}
+      style={styles.actorItem}>
       <Image source={{uri: item.image}} style={styles.actorImage} />
       <Text style={styles.actorName}>{item.name}</Text>
-    </View>
+    </TouchableOpacity>
   );
 
   const renderUserIcon = () => (
-    <View style={styles.userIconContainer}>
+    <TouchableOpacity
+      onPress={() => onSelectImage(avatarImage || '')}
+      style={styles.userIconContainer}>
       <View style={styles.userIcon}>
-        {avatarImage ? (
+        {avatarImage && (
           <Image source={{uri: avatarImage}} style={styles.actorImage} />
-        ) : null}
+        )}
       </View>
       <Text style={styles.storyText}>Your Story</Text>
-    </View>
+    </TouchableOpacity>
   );
 
   const dataWithUserIcon: Actor[] = [
     {
       id: 'userIcon',
       name: 'Your Name',
-      image: avatarImage || '../../../assets/profilepage/noprofilepic.jpg',
+      image: avatarImage || '',
     },
     ...data,
   ];

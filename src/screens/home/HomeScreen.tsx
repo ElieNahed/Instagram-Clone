@@ -8,13 +8,14 @@ import {
   Text,
   Pressable,
   RefreshControl,
+  Modal,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   displayNotificationMessage,
   updateLikeCount,
-} from '../../store/notificationSlice'; // Update import statement
+} from '../../store/notificationSlice';
 import StoryFlatList from '../../components/organisms/homelist/StoryFlatList';
 import HomeHeader from '../../components/organisms/header/HomeHeader';
 import LikeIcon from '../../assets/homepage/Like.svg';
@@ -22,7 +23,6 @@ import CommentIcon from '../../assets/homepage/Comment.svg';
 import ShareIcon from '../../assets/homepage/Share.svg';
 import SaveIcon from '../../assets/homepage/Save.svg';
 import notifee from '@notifee/react-native';
-import styles from './styles';
 import {RootState} from '../../store/store';
 
 interface Actor {
@@ -35,11 +35,24 @@ const HomeScreen = () => {
   const navigation = useNavigation();
   const [actors, setActors] = useState<Actor[]>([]);
   const [refreshing, setRefreshing] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string>('');
+  const [modalVisible, setModalVisible] = useState(false);
   const screenWidth = Dimensions.get('window').width;
   const dispatch = useDispatch();
   const likeCounts = useSelector(
     (state: RootState) => state.notification.likeCounts,
   );
+
+  const handleImageSelect = (image: string) => {
+    setSelectedImage(image);
+    setModalVisible(true);
+
+    // Close the modal after 5 seconds
+    setTimeout(() => {
+      setModalVisible(false);
+      setSelectedImage('');
+    }, 3000);
+  };
 
   useEffect(() => {
     const fetchActorsAndInitializeLikes = async () => {
@@ -54,10 +67,10 @@ const HomeScreen = () => {
 
         const data: Actor[] = await response.json();
         setActors(data);
-        setRefreshing(false); // Finish refreshing
+        setRefreshing(false);
       } catch (error) {
         console.error('Error fetching actors:', error);
-        setRefreshing(false); // Finish refreshing even if there's an error
+        setRefreshing(false);
       }
     };
 
@@ -65,7 +78,7 @@ const HomeScreen = () => {
   }, []);
 
   const onRefresh = () => {
-    setRefreshing(true); // Start refreshing
+    setRefreshing(true);
     fetchActorsAndInitializeLikes();
   };
 
@@ -85,8 +98,8 @@ const HomeScreen = () => {
 
       const actor = actors.find(actor => actor.id === actorId);
       if (actor) {
-        const message = `You just like ${actor.name}'s post `;
-        dispatch(displayNotificationMessage(message)); // Dispatch action to update notification message in Redux store
+        const message = `You just liked ${actor.name}'s post`;
+        dispatch(displayNotificationMessage(message));
         await notifee.displayNotification({
           title: 'New Notification',
           body: message,
@@ -94,9 +107,7 @@ const HomeScreen = () => {
           android: {
             channelId,
             vibrationPattern: [500, 1000],
-            pressAction: {
-              id: 'default',
-            },
+            pressAction: {id: 'default'},
           },
         } as any);
       }
@@ -162,16 +173,14 @@ const HomeScreen = () => {
           </Pressable>
         </View>
       </View>
-      <Text style={styles.likeCount}>like:{likeCounts[item.id]}</Text>
+      <Text style={styles.likeCount}>Likes: {likeCounts[item.id]}</Text>
     </View>
   );
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <HomeHeader title={'Instagram-clone'} navigation={navigation} />
-      </View>
-      <StoryFlatList data={actors} />
+      <HomeHeader title={'Instagram-clone'} navigation={navigation} />
+      <StoryFlatList data={actors} onSelectImage={handleImageSelect} />
       <FlatList
         data={actors}
         renderItem={renderActorItem}
@@ -181,9 +190,118 @@ const HomeScreen = () => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       />
+      <Modal visible={modalVisible} transparent={true}>
+        <View style={styles.modalContainer}>
+          <Image source={{uri: selectedImage}} style={styles.fullScreenImage} />
+          <Pressable
+            onPress={() => setModalVisible(false)}
+            style={styles.modalCloseButton}>
+            <Text style={styles.closeButtonText}>Close</Text>
+          </Pressable>
+        </View>
+      </Modal>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    position: 'relative',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingTop: 20,
+    paddingHorizontal: 20,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    marginBottom: 20,
+  },
+  actorContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 10,
+  },
+  actorImage: {
+    borderRadius: 10,
+    aspectRatio: 1,
+  },
+  actorHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 5,
+    alignSelf: 'flex-start',
+  },
+  profileIcon: {
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    marginRight: 10,
+  },
+  userName: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: 'black',
+    fontFamily: '',
+  },
+  iconContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 5,
+    alignSelf: 'flex-start',
+  },
+  likeIconContainer: {
+    marginRight: 10,
+  },
+  commentIconContainer: {
+    marginRight: 10,
+  },
+  shareIconContainer: {
+    marginRight: 10,
+  },
+  saveIconContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  likeCount: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginTop: 5,
+    alignSelf: 'flex-start',
+    color: 'black',
+  },
+  actorListContainer: {
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingBottom: 20,
+  },
+  modalContainer: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.9)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  fullScreenImage: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain',
+  },
+  modalCloseButton: {
+    position: 'absolute',
+    top: 20,
+    right: 20,
+    padding: 10,
+  },
+  closeButtonText: {
+    color: 'white',
+    fontSize: 16,
+  },
+});
 
 export default HomeScreen;
 function fetchActorsAndInitializeLikes() {

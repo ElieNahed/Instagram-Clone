@@ -33,18 +33,14 @@ const ProfileScreen = ({navigation}: any) => {
 
     fetchData();
 
-    // Check reduced motion setting
     const checkMotionSetting = async () => {
       try {
         const isReducedMotionEnabled =
           await AccessibilityInfo.isReduceMotionEnabled();
         if (isReducedMotionEnabled) {
           console.warn('Reduced motion setting is enabled on this device.');
-          // Handle reduced motion settings here
-          // For example, disable certain animations
         }
       } catch (error) {
-        // Log the error to the terminal without throwing it
         console.error('Error checking motion setting:', error);
       }
     };

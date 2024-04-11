@@ -71,5 +71,15 @@ const camStyles = StyleSheet.create({
   backButtonText: {
     color: 'white',
   },
+  captionInputContainer: {
+    marginVertical: 100,
+    paddingHorizontal: 20,
+  },
+  captionInput: {
+    borderWidth: 1,
+    borderColor: '#000',
+    borderRadius: 5,
+    padding: 10,
+  },
 });
 export default camStyles;

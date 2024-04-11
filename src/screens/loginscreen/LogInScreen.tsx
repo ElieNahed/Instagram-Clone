@@ -31,7 +31,7 @@ const LoginScreen = () => {
   const backgroundColorAnim = new Animated.Value(0);
   const backgroundColor = backgroundColorAnim.interpolate({
     inputRange: [0, 1, 2, 3],
-    outputRange: ['yellow', 'green', 'gray', 'red'], // Replace 'blue' and 'green' with your desired colors
+    outputRange: ['yellow', 'green', 'gray', 'red'],
   });
 
   useEffect(() => {

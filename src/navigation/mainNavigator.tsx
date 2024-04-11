@@ -21,7 +21,7 @@ const MainStackNavigator = createBottomTabNavigator<RootStackParamList>();
 const MainNavigator = () => {
   const avatarImage = useSelector(
     (state: RootState) => state.avatar.avatarImage,
-  ); // Fetching avatar image from Redux
+  );
 
   const icons = [HomeIcon, SearchIcon, AddPostIcon, ReelsIcon, ProfileIcon];
 

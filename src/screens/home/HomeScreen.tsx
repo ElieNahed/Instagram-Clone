@@ -10,6 +10,8 @@ import {
   RefreshControl,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {useDispatch} from 'react-redux';
+import {displayNotificationMessage} from '../../store/notificationSlice';
 import StoryFlatList from '../../components/organisms/homelist/StoryFlatList';
 import HomeHeader from '../../components/organisms/header/HomeHeader';
 import LikeIcon from '../../assets/homepage/Like.svg';
@@ -31,6 +33,7 @@ const HomeScreen = () => {
   const [likeCounts, setLikeCounts] = useState<{[key: string]: number}>({});
   const [refreshing, setRefreshing] = useState(false);
   const screenWidth = Dimensions.get('window').width;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     fetchActors();
@@ -80,6 +83,7 @@ const HomeScreen = () => {
       const actor = actors.find(actor => actor.id === actorId);
       if (actor) {
         const message = `You just like ${actor.name}'s post `;
+        dispatch(displayNotificationMessage(message)); // Dispatch action to update notification message in Redux store
         await notifee.displayNotification({
           title: 'New Notification',
           body: message,

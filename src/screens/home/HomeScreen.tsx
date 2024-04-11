@@ -126,7 +126,9 @@ const HomeScreen = () => {
   };
 
   const handleSave = (actorId: string) => {
-    console.log('Saved actor:', actorId);
+    const message = `You saved actor ${actorId}'s post`;
+    dispatch(displayNotificationMessage(message));
+    // Other save logic if needed
   };
 
   const renderActorItem = ({item}: {item: Actor}) => (
@@ -169,7 +171,7 @@ const HomeScreen = () => {
         </Pressable>
         <View style={styles.saveIconContainer}>
           <Pressable onPress={() => handleSave(item.id)}>
-            <SaveIcon width={40} height={40} />
+            <SaveIcon width={40} height={40} fill="#FFFF00" />
           </Pressable>
         </View>
       </View>
@@ -212,13 +214,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     paddingTop: 20,
     paddingHorizontal: 20,
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '100%',
-    marginBottom: 20,
   },
   actorContainer: {
     alignItems: 'center',

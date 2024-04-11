@@ -8,7 +8,6 @@ const NotificationScreen = () => {
     (state: RootState) => state.notification.notifications,
   );
 
-  // Render item function for FlatList
   const renderItem = ({item}: {item: string}) => (
     <View style={styles.notificationBox}>
       <Text>{item}</Text>

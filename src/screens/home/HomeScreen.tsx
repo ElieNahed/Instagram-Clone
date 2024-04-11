@@ -47,7 +47,6 @@ const HomeScreen = () => {
     setSelectedImage(image);
     setModalVisible(true);
 
-    // Close the modal after 5 seconds
     setTimeout(() => {
       setModalVisible(false);
       setSelectedImage('');
@@ -121,14 +120,68 @@ const HomeScreen = () => {
     dispatch(updateLikeCount({actorId, count: updatedCount}));
   };
 
-  const handleShare = (actorId: string) => {
-    console.log('Shared actor:', actorId);
+  const handleShare = async (actorId: string, actorName: string) => {
+    const message = `You shared ${actorName}'s post`;
+    dispatch(displayNotificationMessage(message));
+
+    try {
+      await notifee.requestPermission();
+      const channelId = await notifee.createChannel({
+        id: 'default',
+        name: 'Default Channel',
+        vibration: true,
+        vibrationPattern: [500, 1000],
+        sound: 'hollow',
+      });
+
+      const actor = actors.find(actor => actor.id === actorId);
+      if (actor) {
+        await notifee.displayNotification({
+          title: 'New Notification',
+          body: message,
+          sound: 'hollow.mp3',
+          android: {
+            channelId,
+            vibrationPattern: [500, 1000],
+            pressAction: {id: 'default'},
+          },
+        } as any);
+      }
+    } catch (error) {
+      console.error('Error displaying notification:', error);
+    }
   };
 
-  const handleSave = (actorId: string) => {
-    const message = `You saved actor ${actorId}'s post`;
+  const handleSave = async (actorId: string, actorName: string) => {
+    const message = `You saved ${actorName}'s post`;
     dispatch(displayNotificationMessage(message));
-    // Other save logic if needed
+
+    try {
+      await notifee.requestPermission();
+      const channelId = await notifee.createChannel({
+        id: 'default',
+        name: 'Default Channel',
+        vibration: true,
+        vibrationPattern: [500, 1000],
+        sound: 'hollow',
+      });
+
+      const actor = actors.find(actor => actor.id === actorId);
+      if (actor) {
+        await notifee.displayNotification({
+          title: 'New Notification',
+          body: message,
+          sound: 'hollow.mp3',
+          android: {
+            channelId,
+            vibrationPattern: [500, 1000],
+            pressAction: {id: 'default'},
+          },
+        } as any);
+      }
+    } catch (error) {
+      console.error('Error displaying notification:', error);
+    }
   };
 
   const renderActorItem = ({item}: {item: Actor}) => (
@@ -166,11 +219,11 @@ const HomeScreen = () => {
         </Pressable>
         <Pressable
           style={styles.shareIconContainer}
-          onPress={() => handleShare(item.id)}>
+          onPress={() => handleShare(item.id, item.name)}>
           <ShareIcon width={30} height={30} />
         </Pressable>
         <View style={styles.saveIconContainer}>
-          <Pressable onPress={() => handleSave(item.id)}>
+          <Pressable onPress={() => handleSave(item.id, item.name)}>
             <SaveIcon width={40} height={40} fill="#FFFF00" />
           </Pressable>
         </View>

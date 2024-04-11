@@ -1,11 +1,11 @@
-// ReelScreen.js
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
-import WorkInProgress from '../../components/atoms/WorkInProgress'; // Import the WorkInProgress component
+import {View, StyleSheet, Text} from 'react-native';
+import WorkInProgress from '../../components/atoms/WorkInProgress';
 
 const ReelScreen = () => {
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>Reels Screen</Text>
       <WorkInProgress />
     </View>
   );
@@ -16,6 +16,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  title: {
+    fontSize: 30,
+    color: 'blue',
   },
 });
 

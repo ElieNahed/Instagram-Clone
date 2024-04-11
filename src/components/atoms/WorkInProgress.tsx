@@ -1,4 +1,3 @@
-// WorkInProgress.js
 import React, {useRef, useEffect} from 'react';
 import {View, Text, StyleSheet, Animated} from 'react-native';
 

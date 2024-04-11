@@ -1,3 +1,15 @@
+Instalation : 
+
+git clone https://github.com/ElieNahed/Instagram-Clone.git  
+
+npm install Or yarn install
+
+npm start Or yarn Start 
+
+npm run android Or yarn android 
+
+
+
 1-Home Screen:
 
 Stories are pressable and close after 3 seconds.

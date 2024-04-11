@@ -81,7 +81,7 @@ const HomeScreen = () => {
       const actor = actors.find(actor => actor.id === actorId);
       if (actor) {
         const message = `You just like ${actor.name}'s post `;
-        dispatch(displayNotificationMessage(message));
+        dispatch(displayNotificationMessage(message)); // Dispatch action to update notification message in Redux store
         await notifee.displayNotification({
           title: 'New Notification',
           body: message,

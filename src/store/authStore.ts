@@ -33,7 +33,7 @@ const secureStorage = {
 const useAuthStore = create(
   persist(
     set => ({
-      authToken: null,
+      authToken:null ,
       setAuthToken: (token: string) => set({authToken: token}),
       clearAuthToken: () => set({authToken: null}),
     }),

@@ -39,29 +39,34 @@ const HomeScreen = () => {
   const dispatch = useDispatch();
   const likeCounts = useSelector(
     (state: RootState) => state.notification.likeCounts,
-  ); // Retrieve likeCounts from Redux
+  );
 
   useEffect(() => {
-    fetchActors();
-  }, []);
+    const fetchActorsAndInitializeLikes = async () => {
+      try {
+        const response = await fetch(
+          'https://66134ae153b0d5d80f67157c.mockapi.io/InstagramData/Actor',
+        );
 
-  const fetchActors = async () => {
-    try {
-      const response = await fetch(
-        'https://66134ae153b0d5d80f67157c.mockapi.io/InstagramData/Actor',
-      );
-      const data: Actor[] = await response.json();
-      setActors(data);
-      setRefreshing(false); // Finish refreshing
-    } catch (error) {
-      console.error('Error fetching actors:', error);
-      setRefreshing(false); // Finish refreshing even if there's an error
-    }
-  };
+        if (!response.ok) {
+          throw new Error('Network response was not ok.');
+        }
+
+        const data: Actor[] = await response.json();
+        setActors(data);
+        setRefreshing(false); // Finish refreshing
+      } catch (error) {
+        console.error('Error fetching actors:', error);
+        setRefreshing(false); // Finish refreshing even if there's an error
+      }
+    };
+
+    fetchActorsAndInitializeLikes();
+  }, []);
 
   const onRefresh = () => {
     setRefreshing(true); // Start refreshing
-    fetchActors();
+    fetchActorsAndInitializeLikes();
   };
 
   const incrementLikeCount = async (actorId: string) => {
@@ -181,3 +186,6 @@ const HomeScreen = () => {
 };
 
 export default HomeScreen;
+function fetchActorsAndInitializeLikes() {
+  throw new Error('Function not implemented.');
+}

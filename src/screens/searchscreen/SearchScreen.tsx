@@ -73,11 +73,9 @@ const SearchScreen = () => {
 
   const handleSearch = () => {
     if (searchQuery.trim() === '') {
-      // If search query is empty, reset filtered items to display all actors
       setFilteredItems([]);
       shuffleItems();
     } else {
-      // If search query is not empty, filter the items based on the search query
       const filteredItems = items.filter(item =>
         item.name.toLowerCase().includes(searchQuery.toLowerCase()),
       );
@@ -109,7 +107,6 @@ const SearchScreen = () => {
   };
 
   const handleScrollEnd = () => {
-    // Refresh data when the user reaches the end of the list
     onRefresh();
   };
 
@@ -152,7 +149,7 @@ const SearchScreen = () => {
             numColumns={3}
             columnWrapperStyle={styles.columnWrapper}
             onScroll={handleScroll}
-            onMomentumScrollEnd={handleScrollEnd} // Add this line
+            onMomentumScrollEnd={handleScrollEnd}
           />
         </View>
       )}

@@ -1,5 +1,3 @@
-// notificationSlice.ts
-
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 interface NotificationState {
@@ -26,7 +24,6 @@ const notificationSlice = createSlice({
       state,
       action: PayloadAction<{actorId: string; count: number}>,
     ) {
-      // Update action parameter type
       const {actorId, count} = action.payload;
       state.likeCounts[actorId] = count;
     },

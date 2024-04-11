@@ -23,14 +23,12 @@ interface Character {
 const MessageScreen = () => {
   const [loading, setLoading] = useState(false);
   const [items, setItems] = useState<Character[]>([]);
+  const [filteredItems, setFilteredItems] = useState<Character[]>([]);
   const [nextPage, setNextPage] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
 
   const fetchPage = async (url: string) => {
     try {
-      if (loading) {
-        return;
-      }
       setLoading(true);
       const response = await fetch(url);
       if (!response.ok) {
@@ -43,11 +41,10 @@ const MessageScreen = () => {
       if (responseJson.info && responseJson.info.next) {
         setNextPage(responseJson.info.next);
       } else {
-        setNextPage(''); // Reset nextPage if it's undefined
+        setNextPage('');
       }
     } catch (error) {
       console.error('Error fetching data:', error);
-      // You can add error handling logic here, such as showing an error message to the user
     } finally {
       setLoading(false);
     }
@@ -63,6 +60,14 @@ const MessageScreen = () => {
     fetchPage(initialPage);
   }, []);
 
+  useEffect(() => {
+    // Filter items whenever searchQuery changes
+    const filtered = items.filter(item =>
+      item.name.toLowerCase().includes(searchQuery.toLowerCase()),
+    );
+    setFilteredItems(filtered);
+  }, [searchQuery, items]); // Listen to changes in searchQuery and items
+
   const renderItem = ({item}: {item: Character}) => {
     return (
       <TouchableHighlight underlayColor="transparent" style={styles.touchable}>
@@ -75,12 +80,12 @@ const MessageScreen = () => {
   };
 
   const handleSearch = () => {
-    // Perform search based on the searchQuery
-    // For simplicity, let's assume we're filtering items by name
-    const filteredItems = items.filter(item =>
+    // This will update filteredItems state, which won't cause an infinite loop
+    // as it doesn't affect the original items state directly
+    const filtered = items.filter(item =>
       item.name.toLowerCase().includes(searchQuery.toLowerCase()),
     );
-    setItems(filteredItems);
+    setFilteredItems(filtered);
   };
 
   return (
@@ -95,9 +100,9 @@ const MessageScreen = () => {
         <Button title="Search" onPress={handleSearch} />
       </View>
       <FlatList
-        data={items}
+        data={filteredItems}
         renderItem={renderItem}
-        keyExtractor={item => item.id}
+        keyExtractor={(item, index) => item.id + index} // Generate unique keys
         onEndReached={() => {
           if (nextPage) {
             fetchPage(nextPage);

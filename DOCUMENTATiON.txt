@@ -1,0 +1,42 @@
+1-Home Screen:
+
+Stories are pressable and close after 3 seconds.
+Profile picture of the user displayed using Redux.
+Like, share, and save buttons trigger local notifications.
+Notifications are displayed on the Notification Screen.
+Notification Screen allows clearing all notifications.
+
+
+2-Message Screen:
+
+Ability to search for users to chat with.
+No time to continue building the chat functionality.
+
+3-Search Screen:
+
+Ability to search for actors, with clickable images displaying their names.
+
+
+4-Add Post Screen:
+
+Camera button to take pictures, storing them locally.
+No time to implement displaying the image in the post.
+
+
+5-Reels Screen:
+
+Some animation implemented.
+
+
+6-Profile Screen:
+
+Contains a drawer with options to:
+Log out (redirects to the login screen).
+Edit profile screen (not finished yet).
+Return to the Profile Screen.
+Profile picture displayed using Redux.
+Share button not functional yet.
+
+7-User Post Page and Saved Post Page:
+
+User post page is pressable.

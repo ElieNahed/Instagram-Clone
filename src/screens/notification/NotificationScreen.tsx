@@ -1,7 +1,5 @@
-// NotificationScreen.tsx
 import React from 'react';
-import {View, Text, StyleSheet, FlatList} from 'react-native'; // Import StyleSheet and FlatList
-
+import {View, Text, StyleSheet, FlatList} from 'react-native';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../store/store';
 

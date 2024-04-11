@@ -1,12 +1,15 @@
 // notificationSlice.ts
+
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 interface NotificationState {
   notifications: string[];
+  likeCounts: {[key: string]: number};
 }
 
 const initialState: NotificationState = {
   notifications: [],
+  likeCounts: {},
 };
 
 const notificationSlice = createSlice({
@@ -19,10 +22,18 @@ const notificationSlice = createSlice({
     clearNotifications(state) {
       state.notifications = [];
     },
+    updateLikeCount(
+      state,
+      action: PayloadAction<{actorId: string; count: number}>,
+    ) {
+      // Update action parameter type
+      const {actorId, count} = action.payload;
+      state.likeCounts[actorId] = count;
+    },
   },
 });
 
-export const {displayNotificationMessage, clearNotifications} =
+export const {displayNotificationMessage, clearNotifications, updateLikeCount} =
   notificationSlice.actions;
 
 export default notificationSlice.reducer;

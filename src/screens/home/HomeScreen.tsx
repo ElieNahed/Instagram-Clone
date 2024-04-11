@@ -10,8 +10,11 @@ import {
   RefreshControl,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
-import {displayNotificationMessage} from '../../store/notificationSlice';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  displayNotificationMessage,
+  updateLikeCount,
+} from '../../store/notificationSlice'; // Update import statement
 import StoryFlatList from '../../components/organisms/homelist/StoryFlatList';
 import HomeHeader from '../../components/organisms/header/HomeHeader';
 import LikeIcon from '../../assets/homepage/Like.svg';
@@ -20,6 +23,7 @@ import ShareIcon from '../../assets/homepage/Share.svg';
 import SaveIcon from '../../assets/homepage/Save.svg';
 import notifee from '@notifee/react-native';
 import styles from './styles';
+import {RootState} from '../../store/store';
 
 interface Actor {
   id: string;
@@ -30,10 +34,12 @@ interface Actor {
 const HomeScreen = () => {
   const navigation = useNavigation();
   const [actors, setActors] = useState<Actor[]>([]);
-  const [likeCounts, setLikeCounts] = useState<{[key: string]: number}>({});
   const [refreshing, setRefreshing] = useState(false);
   const screenWidth = Dimensions.get('window').width;
   const dispatch = useDispatch();
+  const likeCounts = useSelector(
+    (state: RootState) => state.notification.likeCounts,
+  ); // Retrieve likeCounts from Redux
 
   useEffect(() => {
     fetchActors();
@@ -46,12 +52,6 @@ const HomeScreen = () => {
       );
       const data: Actor[] = await response.json();
       setActors(data);
-
-      const initialLikeCounts: {[key: string]: number} = {};
-      data.forEach(actor => {
-        initialLikeCounts[actor.id] = 0;
-      });
-      setLikeCounts(initialLikeCounts);
       setRefreshing(false); // Finish refreshing
     } catch (error) {
       console.error('Error fetching actors:', error);
@@ -65,10 +65,8 @@ const HomeScreen = () => {
   };
 
   const incrementLikeCount = async (actorId: string) => {
-    setLikeCounts(prevCounts => ({
-      ...prevCounts,
-      [actorId]: prevCounts[actorId] + 1,
-    }));
+    const updatedCount = likeCounts[actorId] + 1;
+    dispatch(updateLikeCount({actorId, count: updatedCount}));
 
     try {
       await notifee.requestPermission();
@@ -83,7 +81,7 @@ const HomeScreen = () => {
       const actor = actors.find(actor => actor.id === actorId);
       if (actor) {
         const message = `You just like ${actor.name}'s post `;
-        dispatch(displayNotificationMessage(message)); // Dispatch action to update notification message in Redux store
+        dispatch(displayNotificationMessage(message));
         await notifee.displayNotification({
           title: 'New Notification',
           body: message,
@@ -103,10 +101,8 @@ const HomeScreen = () => {
   };
 
   const decrementLikeCount = (actorId: string) => {
-    setLikeCounts(prevCounts => ({
-      ...prevCounts,
-      [actorId]: Math.max(0, prevCounts[actorId] - 1),
-    }));
+    const updatedCount = Math.max(0, (likeCounts[actorId] || 0) - 1);
+    dispatch(updateLikeCount({actorId, count: updatedCount}));
   };
 
   const handleShare = (actorId: string) => {

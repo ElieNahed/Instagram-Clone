@@ -10,7 +10,7 @@ import {
   StyleSheet,
   Alert,
 } from 'react-native';
-import SkeletonSearchScreen from './SkeletonSearchScreen'; // Import the skeleton screen component
+import SkeletonSearchScreen from './SkeletonSearchScreen';
 
 const initialPage =
   'https://66134ae153b0d5d80f67157c.mockapi.io/InstagramData/Actor';
@@ -72,10 +72,17 @@ const SearchScreen = () => {
   }, []);
 
   const handleSearch = () => {
-    const filteredItems = items.filter(item =>
-      item.name.toLowerCase().includes(searchQuery.toLowerCase()),
-    );
-    setFilteredItems(filteredItems);
+    if (searchQuery.trim() === '') {
+      // If search query is empty, reset filtered items to display all actors
+      setFilteredItems([]);
+      shuffleItems();
+    } else {
+      // If search query is not empty, filter the items based on the search query
+      const filteredItems = items.filter(item =>
+        item.name.toLowerCase().includes(searchQuery.toLowerCase()),
+      );
+      setFilteredItems(filteredItems);
+    }
   };
 
   const showUserName = (userName: string) => {

@@ -66,7 +66,7 @@ const MessageScreen = () => {
       item.name.toLowerCase().includes(searchQuery.toLowerCase()),
     );
     setFilteredItems(filtered);
-  }, [searchQuery, items]); // Listen to changes in searchQuery and items
+  }, [searchQuery, items]);
 
   const renderItem = ({item}: {item: Character}) => {
     return (
@@ -80,8 +80,6 @@ const MessageScreen = () => {
   };
 
   const handleSearch = () => {
-    // This will update filteredItems state, which won't cause an infinite loop
-    // as it doesn't affect the original items state directly
     const filtered = items.filter(item =>
       item.name.toLowerCase().includes(searchQuery.toLowerCase()),
     );
